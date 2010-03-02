@@ -7,7 +7,7 @@
 // nvcc automatically #includes headers needed for cudaMalloc, cudaFree, cudaMemcpy, & cudaMemset
 
 
-int main()
+int main(void)
 {
   // create arrays of 16 elements
   int num_elements = 16;
@@ -37,7 +37,7 @@ int main()
   cudaMemset(device_array, 0, num_bytes);
 
   // copy the contents of the device array to the host array to inspect the result
-  // use "cudaMemcpyDeviceToHost" to indicate the direction of the copy
+  // use cudaMemcpyDeviceToHost to indicate the direction of the copy
   cudaMemcpy(host_array, device_array, num_bytes, cudaMemcpyDeviceToHost);
   
   // print out the result element by element
