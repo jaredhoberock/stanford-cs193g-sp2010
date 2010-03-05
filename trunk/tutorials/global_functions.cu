@@ -8,6 +8,9 @@
 
 
 // "kernels" or __global__ functions are the entry points to code that executes on the GPU
+// The keyword __global__ indicates to the compiler that this function is a GPU entry point.
+// __global__ functions must return void, and may only be called or "launched" from code that
+// executes on the CPU.
 __global__ void kernel(int *array)
 {
   // compute the index of this particular thread
@@ -61,10 +64,11 @@ int main(void)
   // to determine the number of blocks to launch
   int grid_size = num_elements / block_size;
 
-  // to invoke the global function, use the triple chevron notation
-  // the first argument is the number of blocks (grid_size)
-  // the second argument is the number of threads per block (block_size)
-  // after the triple chevrons, pass function arguments as normal
+  // To invoke the global function, use the triple chevron notation.
+  // The first argument is the number of blocks (grid_size).
+  // The second argument is the number of threads per block (block_size).
+  // This is called "configuring" the launch.
+  // After the triple chevrons, pass function arguments as normal.
   kernel<<<grid_size,block_size>>>(device_array);
 
   // download and inspect the result on the host:
