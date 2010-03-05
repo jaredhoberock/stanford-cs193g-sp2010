@@ -1,3 +1,7 @@
+// This example introduces CUDA's heterogeneous model of memory
+// by demonstrating the difference between the "host" and "device"
+// memory spaces.
+
 // #include stdlib.h for malloc/free
 #include <stdlib.h>
 
@@ -36,6 +40,10 @@ int main(void)
   // zero out the device array with cudaMemset
   cudaMemset(device_array, 0, num_bytes);
 
+  // we can't dereference elements of device_array from the host directly:
+  // that will likely cause a crash. instead, we must explicitly copy from
+  // device memory to host memory to access the result
+
   // copy the contents of the device array to the host array to inspect the result
   // use cudaMemcpyDeviceToHost to indicate the direction of the copy
   cudaMemcpy(host_array, device_array, num_bytes, cudaMemcpyDeviceToHost);
@@ -51,6 +59,6 @@ int main(void)
   free(host_array);
 
   // use cudaFree to free the device array
-  cudaFree( device_array );
+  cudaFree(device_array);
 }
 
