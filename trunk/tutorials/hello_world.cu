@@ -1,3 +1,5 @@
+// A simple Hello World CUDA program.
+
 // #include the entire body of the cuPrintf code
 #include "util/cuPrintf.cu"
 
@@ -13,6 +15,7 @@ __global__ void device_greetings(void)
 
 int main(void)
 {
+  // greet from the host
   printf("Hello, world from the host!\n");
 
   // initialize cuPrintf
