@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-__global__ void kernel(int *array, int num_elements_x)
+__global__ void kernel(int *array)
 {
   // compute the two dimensional index of this particular
   // thread in the grid
@@ -14,7 +14,8 @@ __global__ void kernel(int *array, int num_elements_x)
   int index_y = blockIdx.y * blockDim.y + threadIdx.y;
 
   // use the two 2D indices to compute a single linear index
-  int index = index_y * num_elements_x + index_x;
+  int grid_width = gridDim.x * blockDim.x;
+  int index = index_y * grid_width + index_x;
 
   // use the two 2D block indices to compute a single linear block index
   int result = blockIdx.y * gridDim.x + blockIdx.x;
@@ -62,7 +63,7 @@ int main(void)
 
   // grid_size & block_size are passed as arguments to the
   // triple chevrons as usual
-  kernel<<<grid_size,block_size>>>(device_array, num_elements_x);
+  kernel<<<grid_size,block_size>>>(device_array);
 
   // download and inspect the result on the host:
   cudaMemcpy(host_array, device_array, num_bytes, cudaMemcpyDeviceToHost);
