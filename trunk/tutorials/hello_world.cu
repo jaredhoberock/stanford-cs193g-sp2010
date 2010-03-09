@@ -18,7 +18,7 @@ int main(void)
   // initialize cuPrintf
   cudaPrintfInit();
 
-  // launch a kernel to say hello
+  // launch a kernel with a single thread to say hello
   device_greetings<<<1,1>>>();
 
   // display the device's greeting
