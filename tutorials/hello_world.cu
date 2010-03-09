@@ -1,4 +1,7 @@
+// #include the entire body of the cuPrintf code
 #include "util/cuPrintf.cu"
+
+// #include <stdio.h> for host printf
 #include <stdio.h>
 
 
