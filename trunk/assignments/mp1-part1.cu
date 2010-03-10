@@ -60,12 +60,12 @@ int main(void)
   uchar *device_output_array = 0;
   
 
-  // malloc a host array
+  // malloc host arrays
   host_input_array = (uchar*)malloc(num_bytes);
   host_output_array = (uchar*)malloc(num_bytes);
   host_output_checker_array = (uchar*)malloc(num_bytes);
 
-  // cudaMalloc two device arrays
+  // cudaMalloc device arrays
   cudaMalloc((void**)&device_input_array, num_bytes);
   cudaMalloc((void**)&device_output_array, num_bytes);
   
