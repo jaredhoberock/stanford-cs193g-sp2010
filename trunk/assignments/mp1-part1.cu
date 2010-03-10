@@ -16,9 +16,7 @@
 // __global__ functions must return void, and may only be called or "launched" from code that
 // executes on the CPU.
 
-#define uchar unsigned char
-
-void host_shift_cypher(uchar *input_array, uchar *output_array, int shift_amount, int alphabet_max, int array_length)
+void host_shift_cypher(uint *input_array, uint *output_array, int shift_amount, int alphabet_max, int array_length)
 {
 	int i;
 	for(i=0;i<array_length;i++)
@@ -29,13 +27,13 @@ void host_shift_cypher(uchar *input_array, uchar *output_array, int shift_amount
 		{
 			shifted = shifted % (alphabet_max + 1);
 		}
-		output_array[i] = (uchar)shifted;
+		output_array[i] = (uint)shifted;
 	}
 }
 
 
 // This kernel implements a per element shift
-__global__ void shift_cypher(uchar *input_array, uchar *output_array, int shift_amount, int alphabet_max, int array_length)
+__global__ void shift_cypher(uint *input_array, uint *output_array, int shift_amount, int alphabet_max, int array_length)
 {
 	// your code here
 }
@@ -43,27 +41,29 @@ __global__ void shift_cypher(uchar *input_array, uchar *output_array, int shift_
 
 int main(void)
 {
+  srand(1);
+  
   // create arrays of 256 elements
   int num_elements = 256;
 
   
-  int alphabet_max = 255;
+  int alphabet_max = rand();
   
   // compute the size of the arrays in bytes
-  int num_bytes = num_elements * sizeof(unsigned char);
+  int num_bytes = num_elements * sizeof(uint);
 
   // pointers to host & device arrays
-  uchar *host_input_array = 0;
-  uchar *host_output_array = 0;
-  uchar *host_output_checker_array = 0;
-  uchar *device_input_array = 0;
-  uchar *device_output_array = 0;
+  uint *host_input_array = 0;
+  uint *host_output_array = 0;
+  uint *host_output_checker_array = 0;
+  uint *device_input_array = 0;
+  uint *device_output_array = 0;
   
 
   // malloc host arrays
-  host_input_array = (uchar*)malloc(num_bytes);
-  host_output_array = (uchar*)malloc(num_bytes);
-  host_output_checker_array = (uchar*)malloc(num_bytes);
+  host_input_array = (uint*)malloc(num_bytes);
+  host_output_array = (uint*)malloc(num_bytes);
+  host_output_checker_array = (uint*)malloc(num_bytes);
 
   // cudaMalloc device arrays
   cudaMalloc((void**)&device_input_array, num_bytes);
@@ -77,15 +77,12 @@ int main(void)
     return 1;
   }
 
-  // generate random input string
   // initialize
-  srand(1);
-  
   int shift_amount = rand();
   
   for(int i=0;i< num_elements;i++)
   {
-	host_input_array[i] = (uchar)rand(); 
+	host_input_array[i] = (uint)rand(); 
   }
   
   // copy input to GPU
