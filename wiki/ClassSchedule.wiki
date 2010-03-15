@@ -1,0 +1,12 @@
+#summary Class lecture and homework schedule.
+#labels Featured
+
+=Spring 2010 Syllabus=
+
+|| Date        || Lecture                                                  || Material   || Assignments                ||
+|| Tu March 23 || Lecture 1 - Introduction to Massively Parallel Computing || Slides XXX || Kirk & Hwu, Chapters 1 & 2 <br> MP0 ||
+|| Th March 25 || Lecture 2 - Introduction to CUDA || Slides XXX || Kirk & Hwu, Chapter 3 <br> MP1 ||
+|| Tu March 30 || Lecture 3 - CUDA Threads & Atomics || Slides XXX || Kirk & Hwu, Chapter 4 ||
+|| Th April 1  || Lecture 4 - CUDA Memories || Slides XXX || Kirk & Hwu, Chapter 5 ||
+|| Tu April 6  || Lecture 5 - ||
+
