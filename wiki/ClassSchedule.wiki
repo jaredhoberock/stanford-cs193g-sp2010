@@ -3,10 +3,23 @@
 
 =Spring 2010 Syllabus=
 
-|| Date        || Lecture                                                  || Material   || Assignments                ||
-|| Tu March 23 || Lecture 1 - Introduction to Massively Parallel Computing || Slides XXX || Kirk & Hwu, Chapters 1 & 2 <br> MP0 ||
-|| Th March 25 || Lecture 2 - Introduction to CUDA || Slides XXX || Kirk & Hwu, Chapter 3 <br> MP1 ||
+|| <b>Date</b> || <b>Lecture</b> || <b>Material</b> || <b>Assignments</b> ||
+|| Tu March 23 || Lecture 1 - Introduction to Massively Parallel Computing || Slides XXX || Kirk & Hwu, Chapters 1 & 2 <br> MP0 Assigned ||
+|| Th March 25 || Lecture 2 - Introduction to CUDA || Slides XXX || Kirk & Hwu, Chapter 3 <br> MP1 Assigned ||
 || Tu March 30 || Lecture 3 - CUDA Threads & Atomics || Slides XXX || Kirk & Hwu, Chapter 4 ||
 || Th April 1  || Lecture 4 - CUDA Memories || Slides XXX || Kirk & Hwu, Chapter 5 ||
-|| Tu April 6  || Lecture 5 - ||
-
+|| Tu April 6  || Lecture 5 - Performance Considerations || Slides XXX || Kirk & Hwu, Chapter 6 ||
+|| Th April 8  || Lecture 6 - Parallel Programming and Computational Thinking || Slides XXX || Kirk & Hwu, Chapter 10 ||
+|| Tu April 13 || Project Proposals || Slides XXX || ||
+|| Th April 15 || Lecture 7 - Parallel Patterns || Slides XXX || Kirk & Hwu, Chapter 10 ||
+|| Tu April 20 || Lecture 8 - Introduction to Thrust || Slides XXX || ||
+|| Th April 22 || Lecture 9 - Sparse Matrix Vector Operations || Slides XXX || ||
+|| Tu April 27 || Lecture 10 - PDE Solvers || Slides XXX || ||
+|| Th April 29 || Lecture 11 - The Fermi Architecture || Slides XXX || ||
+|| Tu May 4    || Lecture 12 - Ray Tracing Case Study || Slides XXX || ||
+|| Th May 6    || Lecture 13 - Advanced Optimization  || Slides XXX || ||
+|| Tu May 11   || Lecture 14 - Artificial Intelligence Case Study || Slides XXX || ||
+|| Th May 13   || Lecture 15 - The Future of Throughput || Slides XXX || Kirk & Hwu, Chapter 12 ||
+|| Tu May 18   || Lecture 16 - TBD || Slides XXX || ||
+|| Th May 20   || Project Presentations 1 || || ||
+|| Tu May 25   || Project Presentations 2 || || ||
