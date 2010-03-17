@@ -11,11 +11,11 @@
 || Tu April 6  || Lecture 5 - Performance Considerations || Slides XXX || Kirk & Hwu, Chapter 6 ||
 || Th April 8  || Lecture 6 - Parallel Programming and Computational Thinking || Slides XXX || Kirk & Hwu, Chapter 10 <br> MP2 Due <br> MP3 Assigned ||
 || Tu April 13 || Project Proposals || Slides XXX || ||
-|| Th April 15 || Lecture 7 - Parallel Patterns || Slides XXX || Kirk & Hwu, Chapter 10 <br> MP3 Due <br> MP4 Assigned ||
-|| Tu April 20 || Lecture 8 - Introduction to Thrust || Slides XXX || ||
+|| Th April 15 || Lecture 7 - Parallel Patterns || Slides XXX || Kirk & Hwu, Chapter 10 <br> MP3 Due ||
+|| Tu April 20 || Lecture 8 - Introduction to Thrust || Slides XXX || MP4 Assigned||
 || Th April 22 || Lecture 9 - Sparse Matrix Vector Operations || Slides XXX || ||
-|| Tu April 27 || Lecture 10 - PDE Solvers || Slides XXX || ||
-|| Th April 29 || Lecture 11 - The Fermi Architecture || Slides XXX || MP4 Due ||
+|| Tu April 27 || Lecture 10 - PDE Solvers || Slides XXX || MP4 Due ||
+|| Th April 29 || Lecture 11 - The Fermi Architecture || Slides XXX || ||
 || Tu May 4    || Lecture 12 - Ray Tracing Case Study || Slides XXX || ||
 || Th May 6    || Lecture 13 - Advanced Optimization  || Slides XXX || ||
 || Tu May 11   || Lecture 14 - Artificial Intelligence Case Study || Slides XXX || ||
