@@ -142,9 +142,10 @@ int main(void)
   }
   average_optimized_time /= num_launches;
 
-  // report the throughput of each kernel in GB/s
-  float suboptimal_throughput = static_cast<float>(n * sizeof(int)) / (average_suboptimal_time / 1000.0f) / 1000000000.0f;
-  float optimized_throughput = static_cast<float>(n * sizeof(int)) / (average_optimized_time / 1000.0f) / 1000000000.0f;
+  // report the effective throughput of each kernel in GB/s
+  // the effective throughput is measured as size of input read + size of output written divided by time
+  float suboptimal_throughput = static_cast<float>(2 * n * sizeof(int)) / (average_suboptimal_time / 1000.0f) / 1000000000.0f;
+  float optimized_throughput = static_cast<float>(2 * n * sizeof(int)) / (average_optimized_time / 1000.0f) / 1000000000.0f;
 
   // compute throughput per line of code to measure how productive we were
   float suboptimal_throughput_per_sloc = suboptimal_throughput / suboptimal_implementation_size;
