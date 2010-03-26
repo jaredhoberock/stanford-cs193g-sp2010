@@ -9,10 +9,10 @@
 #include <iostream>
 
 // compute the number of lines of code each implementation requires
-const unsigned int suboptimal_implementation_begin = __LINE__;
+const unsigned int simple_implementation_begin = __LINE__;
 
-// a suboptimal version of adjacent_difference which issues redundant loads from off-chip global memory
-__global__ void adjacent_difference_suboptimal(int *result, int *input)
+// a simple version of adjacent_difference which issues redundant loads from off-chip global memory
+__global__ void adjacent_difference_simple(int *result, int *input)
 {
   // compute this thread's global index
   unsigned int i = blockDim.x * blockIdx.x + threadIdx.x;
@@ -27,7 +27,7 @@ __global__ void adjacent_difference_suboptimal(int *result, int *input)
     result[i] = x_i - x_i_minus_one;
   }
 }
-const unsigned int suboptimal_implementation_size = __LINE__ - suboptimal_implementation_begin;
+const unsigned int simple_implementation_size = __LINE__ - simple_implementation_begin;
 
 
 const unsigned int optimized_implementation_begin = __LINE__;
@@ -97,17 +97,17 @@ int main(void)
 
   // dynamically allocate the __shared__ array by passing its
   // size in bytes to the 3rd parameter of the triple chevrons
-  adjacent_difference_suboptimal<<<num_blocks,block_size,block_size*sizeof(int)>>>(d_result, d_input);
+  adjacent_difference_simple<<<num_blocks,block_size,block_size*sizeof(int)>>>(d_result, d_input);
 
   const size_t num_launches = 100;
 
   // time many kernel launches and take the average time
-  float average_suboptimal_time = 0;
+  float average_simple_time = 0;
   for(int i = 0; i < num_launches; ++i)
   {
     // record a CUDA event immediately before and after the kernel launch
     cudaEventRecord(launch_begin,0);
-    adjacent_difference_suboptimal<<<num_blocks,block_size,block_size*sizeof(int)>>>(d_result, d_input);
+    adjacent_difference_simple<<<num_blocks,block_size,block_size*sizeof(int)>>>(d_result, d_input);
     cudaEventRecord(launch_end,0);
     cudaEventSynchronize(launch_end);
 
@@ -115,9 +115,9 @@ int main(void)
     float time = 0;
     cudaEventElapsedTime(&time, launch_begin, launch_end);
 
-    average_suboptimal_time += time;
+    average_simple_time += time;
   }
-  average_suboptimal_time /= num_launches;
+  average_simple_time /= num_launches;
 
   // now time the optimized kernel
 
@@ -144,25 +144,25 @@ int main(void)
 
   // report the effective throughput of each kernel in GB/s
   // the effective throughput is measured as size of input read + size of output written divided by time
-  float suboptimal_throughput = static_cast<float>(2 * n * sizeof(int)) / (average_suboptimal_time / 1000.0f) / 1000000000.0f;
+  float simple_throughput = static_cast<float>(2 * n * sizeof(int)) / (average_simple_time / 1000.0f) / 1000000000.0f;
   float optimized_throughput = static_cast<float>(2 * n * sizeof(int)) / (average_optimized_time / 1000.0f) / 1000000000.0f;
 
   // compute throughput per line of code to measure how productive we were
-  float suboptimal_throughput_per_sloc = suboptimal_throughput / suboptimal_implementation_size;
+  float simple_throughput_per_sloc = simple_throughput / simple_implementation_size;
   float optimized_throughput_per_sloc = optimized_throughput / optimized_implementation_size;
 
   std::cout << "Work load size: " << n << std::endl;
-  std::cout << "Suboptimal implementation SLOCs: " << suboptimal_implementation_size << std::endl;
+  std::cout << "simple implementation SLOCs: " << simple_implementation_size << std::endl;
   std::cout << "Optimized implementation SLOCs: " << optimized_implementation_size << std::endl << std::endl;
 
-  std::cout << "Throughput of suboptimal kernel: " << suboptimal_throughput << " GB/s" << std::endl;
+  std::cout << "Throughput of simple kernel: " << simple_throughput << " GB/s" << std::endl;
   std::cout << "Throughput of optimized kernel: " << optimized_throughput << " GB/s" << std::endl;
-  std::cout << "Performance improvement: " << optimized_throughput / suboptimal_throughput << "x" << std::endl;
+  std::cout << "Performance improvement: " << optimized_throughput / simple_throughput << "x" << std::endl;
   std::cout << std::endl;
 
-  std::cout << "Throughput of suboptimal kernel per line of code: " << suboptimal_throughput_per_sloc << " GB/s/sloc" << std::endl;
+  std::cout << "Throughput of simple kernel per line of code: " << simple_throughput_per_sloc << " GB/s/sloc" << std::endl;
   std::cout << "Throughput of optimized kernel per line of code: " << optimized_throughput_per_sloc << " GB/s/sloc" << std::endl;
-  std::cout << "Performance improvement per line of code: " << optimized_throughput_per_sloc / suboptimal_throughput_per_sloc << "x" << std::endl;
+  std::cout << "Performance improvement per line of code: " << optimized_throughput_per_sloc / simple_throughput_per_sloc << "x" << std::endl;
 
   // destroy the CUDA events
   cudaEventDestroy(launch_begin);
