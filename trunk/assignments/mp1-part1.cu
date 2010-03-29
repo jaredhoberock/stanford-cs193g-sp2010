@@ -1,12 +1,22 @@
-// This is machine problem 1, part 1, shift cypher
-//
-// The problem is to take in a string of unsigned chars and an int,
-// the shift amount, and add the number to each element of
-// the string, effectively "shifting" each element in the 
-// string.
+/* This is machine problem 1, part 1, shift cypher
+ *
+ * The problem is to take in a string of unsigned ints and an int,
+ * the shift amount, and add the number to each element of
+ * the string, effectively "shifting" each element in the 
+ * string.
+ * SUBMISSION GUIDELINES:
+ * You should copy the complete shift_cyper function from your solution
+ * into a file called mp1-part1-solution-kernel.cu and submit that file.
+ * The function needs to have exactly the same interface (including __global__)
+ * as the empty shift_cypher function given below. 
+ */
+
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctime>
+
+#include <mp1-util.cu>
 
 
 // Repeating from the tutorial, just in case you haven't looked at it.
@@ -41,13 +51,14 @@ __global__ void shift_cypher(uint *input_array, uint *output_array, int shift_am
 
 int main(void)
 {
-  srand(1);
+  // initialize
+  srand(time(NULL));
   
-  // create arrays of 256 elements
-  int num_elements = 256;
+  // create arrays of 16M elements
+  int num_elements = 1 << 24;
 
   
-  int alphabet_max = rand();
+  int alphabet_max = 45647;
   
   // compute the size of the arrays in bytes
   int num_bytes = num_elements * sizeof(uint);
@@ -58,6 +69,8 @@ int main(void)
   uint *host_output_checker_array = 0;
   uint *device_input_array = 0;
   uint *device_output_array = 0;
+  
+  event_pair timer;
   
 
   // malloc host arrays
@@ -77,7 +90,8 @@ int main(void)
     return 1;
   }
 
-  // initialize
+
+  // generate random input string
   int shift_amount = rand();
   
   for(int i=0;i< num_elements;i++)
@@ -85,23 +99,39 @@ int main(void)
 	host_input_array[i] = (uint)rand(); 
   }
   
+  // do copies to and from gpu once to get rid of timing weirdness
+  // on first time accesses due to driver
+  cudaMemcpy(device_input_array, host_input_array, num_bytes, cudaMemcpyHostToDevice);
+  cudaMemcpy(host_output_array, device_output_array, num_bytes, cudaMemcpyDeviceToHost);
+
+  start_timer(&timer);
   // copy input to GPU
   cudaMemcpy(device_input_array, host_input_array, num_bytes, cudaMemcpyHostToDevice);
-
+  check_launch("copy to gpu");
+  stop_timer(&timer,"copy to gpu");
+  
   // choose a number of threads per block
-  // 128 threads (4 warps) tends to be a good number
-  int block_size = 128;
+  // we use 512 threads here
+  int block_size = 512;
 
   int grid_size = num_elements / block_size;
 
+  start_timer(&timer);
   // launch kernel
   shift_cypher<<<grid_size,block_size>>>(device_input_array, device_output_array, shift_amount, alphabet_max, num_elements);
+  check_launch("gpu shift cypher");
+  stop_timer(&timer,"gpu shift cypher");
 
+  start_timer(&timer);
   // download and inspect the result on the host:
   cudaMemcpy(host_output_array, device_output_array, num_bytes, cudaMemcpyDeviceToHost);
-
+  check_launch("copy from gpu");
+  stop_timer(&timer,"copy from gpu");
+  
+  start_timer(&timer);
   // generate reference output
   host_shift_cypher(host_input_array, host_output_checker_array, shift_amount, alphabet_max, num_elements);
+  stop_timer(&timer,"host shift cypher");
   
   // check CUDA output versus reference output
   int error = 0;
