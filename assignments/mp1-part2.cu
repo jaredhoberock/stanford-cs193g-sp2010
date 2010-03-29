@@ -1,20 +1,27 @@
-// This is machine problem 1, part 2, force evaluation
-//
-// The problem is to take two sets of charged particles, 
-// where each particle has a position and a charge associated with itself,
-// and calculate the force between specific pairs of particles. 
-// An index array holds the information which particle in set B should be
-// paired with which particle in set A. Note that some indices will be
-// out of range and you should output a force vector of zero for those particles.
+/* This is machine problem 1, part 2, shuffle and add
+ *
+ * The problem is to take two sets of charged particles, 
+ * where each particle has a position and a charge associated with itself,
+ * and calculate the force between specific pairs of particles. 
+ * An index array holds the information which particle in set B should be
+ * paired with which particle in set A.
+ * SUBMISSION GUIDELINES:
+ * You should submit two files, called mp1-part2-solution-kernel.cu and mp1-part2-solution-host.cu
+ * which contain your version of the force_eval and host_charged_particles functions.
+ */
+
 
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "mp1-util.cu"
+
 #define EPSILON 0.00001f
 
+event_pair timer;
+  
 float4 force_calc(float4 A, float4 B) 
 {
-	// particles are composed of {position,charge}
 	float x = B.x - A.x;
 	float y = B.y - A.y;
 	float z = B.z - A.z;
@@ -26,8 +33,8 @@ float4 force_calc(float4 A, float4 B)
 	}
 	float r = sqrt(rsq);
 	float f = A.w * B.w / rsq;
-	// a force vector is made up of {direction,force}
-	float4 fv = make_float4(x/r,y/r,z/r,f);
+	float inv_r = 1.0f / r;
+	float4 fv = make_float4(x*inv_r,y*inv_r,z*inv_r,f);
 	return fv;
 }
  
@@ -46,13 +53,33 @@ void host_force_eval(float4 *set_A, float4 *set_B, int * indices, float4 *force_
 }
 
 
-// your kernel here...
+__global__ void force_eval(float4 *set_A, float4 *set_B, int * indices, float4 *force_vectors, int array_length)
+{
+	// your code here ...
+}
 
+
+
+// 
+void host_charged_particles(float4 *h_set_A, float4 *h_set_B, int *h_indices, float4 *h_force_vectors, int num_elements)
+{ 
+  // your code here ...
+  
+  start_timer(&timer);
+  // launch kernel
+  
+  // the actual kernel launch should go here, so that the time it took is measured 
+
+  check_launch("gpu force eval");
+  stop_timer(&timer,"gpu force eval");
+  
+  // more code here...
+}
 
 int main(void)
 {
-  // create arrays of 16K elements
-  int num_elements = 256*256;
+  // create arrays of 4M elements
+  int num_elements =  1 << 22;
 
   // pointers to host & device arrays
   float4 *h_set_A = 0;
@@ -61,26 +88,24 @@ int main(void)
   float4 *h_force_vectors = 0;
   float4 *h_force_vectors_checker = 0;
   
-  // malloc host arrays
+   // initialize
+  srand(time(NULL)); 
+  
+  // malloc host array
   h_set_A = (float4*)malloc(num_elements * sizeof(float4));
   h_set_B = (float4*)malloc(num_elements * sizeof(float4));
   h_indices = (int*)malloc(num_elements * sizeof(int));
   h_force_vectors = (float4*)malloc(num_elements * sizeof(float4));
   h_force_vectors_checker = (float4*)malloc(num_elements * sizeof(float4));
   
-  // any gpu memory allocation should go here
-  
-  // if any memory allocation failed, report an error message
+  // if either memory allocation failed, report an error message
   if(h_set_A == 0 || h_set_B == 0 || h_force_vectors == 0 || h_indices == 0 || h_force_vectors_checker == 0)
   {
     printf("couldn't allocate memory\n");
-    return 1;
+    exit(1);
   }
 
-  // generate random input string
-  // initialize
-  srand(1);
-    
+  // generate random input
   for(int i=0;i< num_elements;i++)
   {
 	h_set_A[i] = make_float4(rand(),rand(),rand(),rand()); 
@@ -90,14 +115,19 @@ int main(void)
 	
   }
   
-  // add your code for copying data to and from the GPU and running your kernel here
-  // the output of your gpu kernel should end up in h_force_vectors
-  
+  start_timer(&timer);
   // generate reference output
   host_force_eval(h_set_A, h_set_B, h_indices, h_force_vectors_checker, num_elements);
   
+  check_launch("host force eval");
+  stop_timer(&timer,"host force eval");
+  
+  // the results of the calculation need to end up in h_force_vectors;
+  host_charged_particles(h_set_A, h_set_B, h_indices, h_force_vectors, num_elements);
+  
   // check CUDA output versus reference output
   int error = 0;
+  
   for(int i=0;i<num_elements;i++)
   {
 	float4 v = h_force_vectors[i];
@@ -109,7 +139,9 @@ int main(void)
 	{ 
 		error = 1;
 	}
+	
   }
+  printf("\n");
   
   if(error)
   {
@@ -125,7 +157,5 @@ int main(void)
   free(h_indices);
   free(h_force_vectors);
   free(h_force_vectors_checker);
-  
-  // don't forget to free any gpu memory
 }
 
