@@ -1,0 +1,6 @@
+#summary More on CUDA __global__ functions.
+
+= Global Functions =
+
+Add your content here.
+
