@@ -62,4 +62,11 @@ The variables of interest are used inside the `__global__` function, `kernel`.  
   int index = blockIdx.x * blockDim.x + threadIdx.x;
 }}}
 
-With this index, it's easy to ensure each CUDA thread has a 1-to-1 mapping to a unique array element if we've been careful to launch exactly as many CUDA threads as we have array locations to write.
+With this index, it's easy to ensure each CUDA thread has a 1-to-1 mapping to a unique array element if we've been careful to launch exactly as many CUDA threads as we have array locations to write.  In fact, when expressed this way, it's easy to recognize the relationship between the body of a `__global__` function and the body of a traditional for loop in C:
+
+{{{
+  for(int index = 0; index < N; ++index)
+  {
+    array[index] = 7;
+  }
+}}}
