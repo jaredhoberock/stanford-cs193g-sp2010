@@ -3,4 +3,4 @@
 
 = Global Functions =
 
-Add your content here.
+In the last section, we learned that `__global__` functions serve as the point of entry into a kernel which executes in parallel on a GPU device.  In fact, `__global__` functions expose a particular form of computation called [http://en.wikipedia.org/wiki/Data_parallelism _data parallelism_].
