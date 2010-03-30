@@ -1,2 +1,3 @@
 * [GettingStartedWithCUDA CUDA Tutorial]
   * [TutorialPrerequisites Prerequisites]
+  * [TutorialAHeterogeneousProgrammingModel A Heterogeneous Programming Model]
