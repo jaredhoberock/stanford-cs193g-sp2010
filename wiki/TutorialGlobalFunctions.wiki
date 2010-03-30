@@ -72,3 +72,5 @@ With this index, it's easy to ensure each CUDA thread has a 1-to-1 mapping to a 
 }}}
 
 The crucial difference is that each for loop iteration executes _sequentially_ while a `__global__` function executes _in parallel_.
+
+You might have noticed that in this example, we passed an argument to our `__global__` function, specifically, a pointer to the device array we wished to fill.  `__global__` functions are much like regular C functions in this regard -- they may accept parameters, as long as they are not [http://en.wikipedia.org/wiki/Reference_(C%2B%2B) C++ references].
