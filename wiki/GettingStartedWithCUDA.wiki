@@ -1,0 +1,16 @@
+#summary A brief tutorial for new CUDA programmers
+
+= Introduction =
+
+This page describes how to get started programming in CUDA C/C++, a language for programming massively parallel GPUs.  This tutorial is intended for an audience experienced in C or C++ programming.
+
+= Prerequisites =
+
+To get started programming with CUDA, download and install the [www.nvidia.com/getcuda CUDA Toolkit and developer driver].  The toolkit contains `nvcc`, the NVIDIA CUDA Compiler, and other tools necessary to develop CUDA applications. To execute CUDA programs, you'll also need a [http://www.nvidia.com/object/cuda_gpus.html CUDA-compatible GPU].
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
