@@ -45,8 +45,43 @@ Let's compile this program by copying it to a file called `hello_world.cu`.  Pla
 Compiling and running the program on a Mac OSX system yields
 
 {{{
-$ yucky:tutorials jared$ nvcc hello_world.cu -o hello_world
-$ yucky:tutorials jared$ ./hello_world 
+yucky:tutorials jared$ nvcc hello_world.cu -o hello_world
+yucky:tutorials jared$ ./hello_world 
 Hello, world from the host!
 Hello, world from the device!
+}}}
+
+It works, but a single greeting doesn't seem very parallel.  You'll notice from the comment in the above program that we _launched_ a single CUDA thread using some strange looking function call syntax.  The triple chevron `<<<B,N>>>` notation _configures_ a kernel's launch by specifying the number `B` of thread groups, or _blocks_, and the number `N` of threads per block.  Let's see what happens when change the kernel launch's configuration.
+
+Try changing the line
+
+{{{
+  device_greetings<<<1,1>>>();
+}}}
+
+to
+
+{{{
+  device_greetings<<<10,64>>>();
+}}}
+
+and recompiling.  You'll be greeted by `10 * 64 = 640` threads!
+
+{{{
+yucky:tutorials jared$ ./hello_world 
+Hello, world from the host!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+Hello, world from the device!
+...
 }}}
