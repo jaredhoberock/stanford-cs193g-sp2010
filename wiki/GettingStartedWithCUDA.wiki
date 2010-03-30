@@ -42,7 +42,7 @@ int main(void)
   // malloc host memory
   host_array = (int*)malloc(num_bytes);
 
-  // cudaMalloc a device array
+  // cudaMalloc device memory
   cudaMalloc((void**)&device_array, num_bytes);
 
   // zero out the device array with cudaMemset
