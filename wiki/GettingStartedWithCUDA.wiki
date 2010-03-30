@@ -1,5 +1,5 @@
 #summary A brief tutorial for new CUDA programmers
-#labels Featured
+#labels Featured,Phase-Deploy
 
 = Introduction =
 
