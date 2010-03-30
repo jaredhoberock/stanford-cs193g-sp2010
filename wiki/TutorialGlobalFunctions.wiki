@@ -7,4 +7,52 @@ In the [TutorialHelloWorld last section], we learned that `__global__` functions
 
 Consider the data parallel task of filling an array with a particular value.  We have almost all the tools we need to implement this operation with a `__global__` function in CUDA: we know [TutorialAHeterogeneousProgrammingModel how to allocate device memory], and we know [TutorialHelloWorld how to write __global__ functions and instantiate CUDA threads] which execute them.  The missing piece is the mapping of subtasks (setting a particular array element to the given value) to particular CUDA threads.
 
-In order to map a particular CUDA thread to a particular subtask, CUDA provides built-in variables which uniquely identify each thread in its _grid_ of thread blocks.
+In order to map a particular CUDA thread to a particular subtask, CUDA provides built-in variables which uniquely identify each thread in its _grid_ of thread blocks.  To see how to use them, let's look at some code which fills a device array with the value `7`.
+
+{{{
+#include <stdlib.h>
+#include <stdio.h>
+
+__global__ void kernel(int *array)
+{
+  int index = blockIdx.x * blockDim.x + threadIdx.x;
+
+  array[index] = 7;
+}
+
+
+int main(void)
+{
+  int num_elements = 256;
+
+  int num_bytes = num_elements * sizeof(int);
+
+  // pointers to host & device arrays
+  int *device_array = 0;
+  int *host_array = 0;
+
+  // malloc a host array
+  host_array = (int*)malloc(num_bytes);
+
+  // cudaMalloc a device array
+  cudaMalloc((void**)&device_array, num_bytes);
+
+  int block_size = 128;
+  int grid_size = num_elements / block_size;
+
+  kernel<<<grid_size,block_size>>>(device_array);
+
+  // download and inspect the result on the host:
+  cudaMemcpy(host_array, device_array, num_bytes, cudaMemcpyDeviceToHost);
+
+  // print out the result element by element
+  for(int i=0; i < num_elements; ++i)
+  {
+    printf("%d ", host_array[i]);
+  }
+ 
+  // deallocate memory
+  free(host_array);
+  cudaFree(device_array);
+}
+}}}
