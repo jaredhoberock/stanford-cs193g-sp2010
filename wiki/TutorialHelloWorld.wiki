@@ -85,3 +85,5 @@ Hello, world from the device!
 Hello, world from the device!
 ...
 }}}
+
+We'll see what else `__global__` functions can do in the [TutorialGlobalFunctions next section].
