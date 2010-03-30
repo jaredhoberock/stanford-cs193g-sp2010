@@ -2,3 +2,4 @@
   * [TutorialPrerequisites Prerequisites]
   * [TutorialAHeterogeneousProgrammingModel A Heterogeneous Programming Model]
   * [TutorialHelloWorld Hello, world! in CUDA]
+  * [TutorialGlobalFunctions CUDA __global__ functions]
