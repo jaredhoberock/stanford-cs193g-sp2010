@@ -15,3 +15,5 @@ Cuda compilation tools, release 3.0, V0.2.1221
 }}}
 
 outputs the compiler information. If the previous command was not successful, then the CUDA Toolkit is likely not installed, or the path to `nvcc` (`C:\CUDA\bin` on Windows machines, `/usr/local/cuda/bin` on POSIX OSes) is not part of your `PATH` environment variable.
+
+Now that our system is configured, let's start [TutorialAHeterogeneousProgrammingModel coding]!
