@@ -1,4 +1,5 @@
 #summary System prerequisites for CUDA programming.
+#labels Phase-Deploy
 
 = Prerequisites =
 
