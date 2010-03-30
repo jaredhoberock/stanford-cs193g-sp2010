@@ -46,8 +46,8 @@ Let's compile this program by copying it to a file called `hello_world.cu`.  Pla
 Compiling and running the program on a Mac OSX system yields
 
 {{{
-yucky:tutorials jared$ nvcc hello_world.cu -o hello_world
-yucky:tutorials jared$ ./hello_world 
+$ nvcc hello_world.cu -o hello_world
+$ ./hello_world 
 Hello, world from the host!
 Hello, world from the device!
 }}}
