@@ -3,7 +3,7 @@
 
 = Prerequisites =
 
-To get started programming with CUDA, download and install the [http://www.nvidia.com/getcuda CUDA Toolkit and developer driver].  The toolkit includes `nvcc`, the NVIDIA CUDA Compiler, and other tools necessary to develop CUDA applications. The driver is necessary to ensure that GPU programs run correctly on [http://www.nvidia.com/object/cuda_gpus.htm CUDA-capable hardware], which you'll also need.
+To get started programming with CUDA, download and install the [http://www.nvidia.com/getcuda CUDA Toolkit and developer driver].  The toolkit includes `nvcc`, the NVIDIA CUDA Compiler, and other software necessary to develop CUDA applications. The driver is necessary to ensure that GPU programs run correctly on [http://www.nvidia.com/object/cuda_gpus.htm CUDA-capable hardware], which you'll also need.
 
 You can confirm that the CUDA Toolkit is correctly installed on your machine by running `nvcc --version` from a command line.  For example, on a Mac OSX machine,
 
