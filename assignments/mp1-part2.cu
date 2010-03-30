@@ -1,4 +1,4 @@
-/* This is machine problem 1, part 2, shuffle and add
+/* This is machine problem 1, part 2, force evaluation
  *
  * The problem is to take two sets of charged particles, 
  * where each particle has a position and a charge associated with itself,
