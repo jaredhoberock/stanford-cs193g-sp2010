@@ -3,4 +3,6 @@
 
 = Global Functions =
 
-In the [TutorialHelloWorld last section], we learned that `__global__` functions serve as the point of entry into a kernel which executes in parallel on a GPU device.  In fact, `__global__` functions expose a particular form of parallel computation called [http://en.wikipedia.org/wiki/Data_parallelism data parallelism].  Data parallel kernels 
+In the [TutorialHelloWorld last section], we learned that `__global__` functions serve as the point of entry into a kernel which executes in parallel on a GPU device.  In fact, `__global__` functions expose a particular form of parallel computation called [http://en.wikipedia.org/wiki/Data_parallelism data parallelism].  The basic idea of data parallelism is to distribute a large task composed of many similar but independent pieces across a set of computational resources.  In CUDA, the task to be performed is described by a `__global__` function, and the computational resources are CUDA threads.  Individual threads work on individual subtasks, and since they are independent, these subtasks can be performed in parallel.
+
+Consider the data parallel problem of filling an array with a particular value in parallel.  We have almost all the tools we need to implement this operation with a `__global__` function: we know how to allocate device memory, and we know how to write `__global__` function and instantiate CUDA threads which execute them.
