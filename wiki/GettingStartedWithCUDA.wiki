@@ -1,4 +1,5 @@
 #summary A brief tutorial for new CUDA programmers
+#labels Featured
 
 = Introduction =
 
