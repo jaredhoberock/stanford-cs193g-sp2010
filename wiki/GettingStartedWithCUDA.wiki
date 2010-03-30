@@ -74,10 +74,3 @@ C:\Program Files\Microsoft Visual Studio 8\VC>cuda_memory_model
 }}}
 
 The result is a sequence of zeros, as expected.  Note that in order to access the device space result, the host was required to explicitly copy the array to host memory.  Even though the `cudaMalloc` system call returns what appears to be a normal pointer, the memory it references is unavailable to the host. Attempts by the host to dereference it will likely yield a segmentation fault. The full source code of this example, with additional commentary, is available in this site's [http://code.google.com/p/stanford-cs193g-sp2010/source/browse/trunk/tutorials/cuda_memory_model.cu Subversion repository].
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
