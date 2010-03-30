@@ -87,4 +87,4 @@ Hello, world from the device!
 ...
 }}}
 
-We'll see what else `__global__` functions can do in the [TutorialGlobalFunctions next section].
+As always, you can view the full source code of this example along with additional commentary in our [http://code.google.com/p/stanford-cs193g-sp2010/source/browse/trunk/tutorials/hello_world.cu Subversion repository].  We'll see what else `__global__` functions can do in the [TutorialGlobalFunctions next section].
