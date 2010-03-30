@@ -44,4 +44,4 @@ $ ./test
 CUDA error: no error
 }}}
 
-If the compile succeeds without error, then let's [TutorialAHeterogeneousProgrammingModel start coding]!
+If the program succeeds without error, then let's [TutorialAHeterogeneousProgrammingModel start coding]!
