@@ -1,4 +1,5 @@
 #summary Hello, world! in CUDA.
+#labels Phase-Deploy
 
 = Hello, world! =
 
