@@ -18,7 +18,7 @@
 # You can set your PATH and LD_LIBRARY_PATH variables as part of your
 # .profile so that you can compile and run without using this makefile.
 
-NVCCFLAGS	:= 
+NVCCFLAGS	:=
 NVCC		:= /usr/local/cuda/bin/nvcc
 LD_LIBRARY_PATH	:= /usr/local/cuda/lib64
 
@@ -26,13 +26,13 @@ LD_LIBRARY_PATH	:= /usr/local/cuda/lib64
 all: part1 part2 part3
 
 part1: mp1-part1.cu 
-	$(NVCC) -o part1 mp1-part1.cu$(NVCCFLAGS)
+	$(NVCC) -o part1 mp1-part1.cu $(NVCCFLAGS)
 
 part2: mp1-part2.cu
-	$(NVCC) -o part2 mp1-part2.cu$(NVCCFLAGS)
+	$(NVCC) -o part2 mp1-part2.cu $(NVCCFLAGS)
 
 part3: mp1-part3.cu
-	$(NVCC) -o part3 mp1-part3.cu$(NVCCFLAGS)
+	$(NVCC) -o part3 mp1-part3.cu $(NVCCFLAGS)
 
 clean:
 	rm -rf part1 part2 part3
@@ -43,5 +43,5 @@ run1: part1
 run2: part2
 	./part2
 
-run3: part3
+run3: part3 the
 	./part3
