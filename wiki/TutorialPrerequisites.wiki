@@ -17,4 +17,6 @@ Cuda compilation tools, release 3.0, V0.2.1221
 
 outputs the compiler information. If the previous command was not successful, then the CUDA Toolkit is likely not installed, or the path to `nvcc` (`C:\CUDA\bin` on Windows machines, `/usr/local/cuda/bin` on POSIX OSes) is not part of your `PATH` environment variable.
 
+In addition to `nvcc`, you'll also need a _host compiler_ to compile and build CUDA programs.  On Windows, this is `cl.exe`, the Microsoft compiler, which ships with Microsoft Visual Studio. On POSIX OSes, this is `gcc` or `g++`.  The official CUDA [http://www.nvidia.com/getcuda Getting Started Guides] can tell you which compiler versions are supported on your particular platform.
+
 Now that our system is configured, let's start [TutorialAHeterogeneousProgrammingModel coding]!
