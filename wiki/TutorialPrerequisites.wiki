@@ -19,4 +19,29 @@ outputs the compiler information. If the previous command was not successful, th
 
 Additionally, you'll also need a _host compiler_ which works with `nvcc` to compile and build CUDA programs.  On Windows, this is `cl.exe`, the Microsoft compiler, which ships with Microsoft Visual Studio. On POSIX OSes, this is `gcc` or `g++`.  The official CUDA [http://www.nvidia.com/getcuda Getting Started Guides] can tell you which compiler versions are supported on your particular platform.
 
-Now that our system is configured, let's start [TutorialAHeterogeneousProgrammingModel coding]!
+To make sure everything is set up correctly, let's compile and run a trivial CUDA program to ensure all the tools work together correctly.
+
+{{{
+#include <stdio.h>
+
+__global__ void foo()
+{
+}
+
+int main()
+{
+  foo<<<1,1>>>();
+  printf("CUDA error: %s\n", cudaGetErrorString(cudaGetLastError()));  
+  return 0;
+}
+}}}
+
+To compile this program, copy it to a file called `test.cu` and compile it from the command line.  For example, on a Mac OSX system, the following should work:
+
+{{{
+$ nvcc test.cu -o test
+$ ./test 
+CUDA error: no error
+}}}
+
+If the compile succeeds without error, then let's [TutorialAHeterogeneousProgrammingModel start coding]!
