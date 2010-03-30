@@ -20,7 +20,6 @@ __global__ void kernel(int *array)
   array[index] = 7;
 }
 
-
 int main(void)
 {
   int num_elements = 256;
