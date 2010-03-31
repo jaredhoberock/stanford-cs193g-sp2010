@@ -1,7 +1,7 @@
 #summary More on CUDA __global__ functions.
 #labels Phase-Deploy
 
-= Global Functions =
+= `__global__` Functions =
 
 In the [TutorialHelloWorld last section], we learned that `__global__` functions serve as the point of entry into a kernel which executes in parallel on a GPU device.  In fact, `__global__` functions expose a particular form of parallel computation called [http://en.wikipedia.org/wiki/Data_parallelism data parallelism].  The basic idea of data parallelism is to distribute a large task composed of many similar but independent pieces across a set of computational resources.  In CUDA, the task to be performed is described by a `__global__` function, and the computational resources are CUDA threads.  Individual threads work on individual subtasks, and since they are independent, these subtasks can be performed in parallel.
 
