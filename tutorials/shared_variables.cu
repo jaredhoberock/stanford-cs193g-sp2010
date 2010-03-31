@@ -152,7 +152,7 @@ int main(void)
   float optimized_throughput_per_sloc = optimized_throughput / optimized_implementation_size;
 
   std::cout << "Work load size: " << n << std::endl;
-  std::cout << "simple implementation SLOCs: " << simple_implementation_size << std::endl;
+  std::cout << "Simple implementation SLOCs: " << simple_implementation_size << std::endl;
   std::cout << "Optimized implementation SLOCs: " << optimized_implementation_size << std::endl << std::endl;
 
   std::cout << "Throughput of simple kernel: " << simple_throughput << " GB/s" << std::endl;
