@@ -72,3 +72,36 @@ int main(void)
   cudaFree(device_array);
 }
 }}}
+
+The host code of this example uses a type we haven't seen before: `dim3`.  In order to configure a two-dimensional grid, we pass values of this type to the triple chevrons instead of the plain integer arguments we've used before for one-dimensional kernels.  `dim3` is a simple vector type, and you can assume its definition looks something like:
+
+{{{
+  struct dim3
+  {
+    unsigned int x, y, z;
+    ...
+  };
+}}}
+
+You'll note that our example didn't set either of `block_size.z` or `grid_size.z`.  By default, they are initialized to `1`.  Though the dimensionality of our problem is 2D, notice we configured the launch using arithmetic analogous to  our previous 1D examples.  First, we described the total size of the data parallel task at hand:
+
+{{{
+  int num_elements_x = 16;
+  int num_elements_y = 16;
+}}}
+
+Next, we decided how to partition the task into blocks of threads:
+
+{{{
+  dim3 block_size;
+  block_size.x = 4;
+  block_size.y = 4;
+}}}
+
+And finally, we decided how many blocks of threads were needed to cover the size of the problem:
+
+{{{
+  dim3 grid_size;
+  grid_size.x = num_elements_x / block_size.x;
+  grid_size.y = num_elements_y / block_size.y;
+}}}
