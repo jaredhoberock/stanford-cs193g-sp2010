@@ -98,10 +98,53 @@ Next, we decided how to partition the task into blocks of threads:
   block_size.y = 4;
 }}}
 
-And finally, we decided how many blocks of threads were needed to cover the size of the problem:
+And finally, we decided how many blocks of threads were needed to completely cover the size of the problem:
 
 {{{
   dim3 grid_size;
   grid_size.x = num_elements_x / block_size.x;
   grid_size.y = num_elements_y / block_size.y;
 }}}
+
+Our `__global__` function, `kernel` similarly performs arithmetic analogous to our previous examples to uniquely identify each thread involved in the computation at large.  The built-in variables `threadIdx`, `blockIdx`, and `blockDim` are munged together to provide a unique, global index.  This time, we do it in 2D:
+
+{{{
+  int index_x = blockIdx.x * blockDim.x + threadIdx.x;
+  int index_y = blockIdx.y * blockDim.y + threadIdx.y;
+}}}
+
+This time, we used a new built-in variable we haven't seen before, `gridDim`, which encodes the number of thread blocks in each dimension.  We used it to map the 2D global indices we computed, `index_x` and `index_y`, to a single, linear 1D index:
+
+{{{
+  int grid_width = gridDim.x * blockDim.x;
+  int index = index_y * grid_width + index_x;
+}}}
+
+This was necessary in order to assign each individual CUDA thread to a unique element of `array`.
+
+The actual work our kernel does is trivial.  Similarly to how we assigned a unique 1D index to each CUDA thread, we used `blockIdx` and `gridDim` to assign each thread block a unique index, which we wrote out to `array`.
+
+To test the program, copy it to `two_dimensional_kernel_launch.cu`.  If you compile and run it, and you'll visualize the 2D structure of our threads:
+
+{{{
+$ nvcc two_dimensional_kernel_launch.cu -o two_dimensional_kernel_launch
+$ ./two_dimensional_kernel_launch 
+ 0  0  0  0  1  1  1  1  2  2  2  2  3  3  3  3 
+ 0  0  0  0  1  1  1  1  2  2  2  2  3  3  3  3 
+ 0  0  0  0  1  1  1  1  2  2  2  2  3  3  3  3 
+ 0  0  0  0  1  1  1  1  2  2  2  2  3  3  3  3 
+ 4  4  4  4  5  5  5  5  6  6  6  6  7  7  7  7 
+ 4  4  4  4  5  5  5  5  6  6  6  6  7  7  7  7 
+ 4  4  4  4  5  5  5  5  6  6  6  6  7  7  7  7 
+ 4  4  4  4  5  5  5  5  6  6  6  6  7  7  7  7 
+ 8  8  8  8  9  9  9  9 10 10 10 10 11 11 11 11 
+ 8  8  8  8  9  9  9  9 10 10 10 10 11 11 11 11 
+ 8  8  8  8  9  9  9  9 10 10 10 10 11 11 11 11 
+ 8  8  8  8  9  9  9  9 10 10 10 10 11 11 11 11 
+12 12 12 12 13 13 13 13 14 14 14 14 15 15 15 15 
+12 12 12 12 13 13 13 13 14 14 14 14 15 15 15 15 
+12 12 12 12 13 13 13 13 14 14 14 14 15 15 15 15 
+12 12 12 12 13 13 13 13 14 14 14 14 15 15 15 15 
+}}}
+
+From this output, the 2D structure of our thread blocks and grid is clear!
