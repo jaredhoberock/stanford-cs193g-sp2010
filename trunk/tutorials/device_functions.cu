@@ -8,25 +8,25 @@
 // __device__ functions may only be called from __global__ functions or other
 // __device__ functions.  Unlike __global__ functions, __device__ functions are
 // not configured, and have no restriction on return type.
-__device__ int return_constant(void)
+__device__ int get_constant(void)
 {
   // just return 7
   return 7;
 }
 
-__device__ int return_block_index(void)
+__device__ int get_block_index(void)
 {
   // return the index of the current thread's block
   return blockIdx.x;
 }
 
-__device__ int return_thread_index(void)
+__device__ int get_thread_index(void)
 {
   // return the index of the current thread within its block
   return threadIdx.x;
 }
 
-__device__ int return_global_index(void)
+__device__ int get_global_index(void)
 {
   // return the index of the current thread across the entire grid launch
   return blockIdx.x * blockDim.x + threadIdx.x;
@@ -36,32 +36,32 @@ __device__ int return_global_index(void)
 // kernel1 returns the result of calling the __device__ function return_constant():
 __global__ void kernel1(int *array)
 {
-  int index = blockIdx.x * blockDim.x + threadIdx.x;
-  array[index] = return_constant();
+  int index = get_global_index();
+  array[index] = get_constant();
 }
 
 
 // kernel2 returns the result of calling the __device__ function return_block_index():
 __global__ void kernel2(int *array)
 {
-  int index = blockIdx.x * blockDim.x + threadIdx.x;
-  array[index] = return_block_index();
+  int index = get_global_index();
+  array[index] = get_block_index();
 }
 
 
 // kernel3 returns the result of calling the __device__ function return_thread_index():
 __global__ void kernel3(int *array)
 {
-  int index = blockIdx.x * blockDim.x + threadIdx.x;
-  array[index] = return_thread_index();
+  int index = get_global_index();
+  array[index] = get_thread_index();
 }
 
 
 // kernel4 returns the result of calling the __device__ function return_thread_index():
 __global__ void kernel4(int *array)
 {
-  int index = blockIdx.x * blockDim.x + threadIdx.x;
-  array[index] = return_global_index();
+  int index = get_global_index();
+  array[index] = get_global_index();
 }
 
 
