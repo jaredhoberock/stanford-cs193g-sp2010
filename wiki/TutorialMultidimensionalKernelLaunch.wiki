@@ -147,6 +147,6 @@ $ ./two_dimensional_kernel_launch
 12 12 12 12 13 13 13 13 14 14 14 14 15 15 15 15 
 }}}
 
-From this output, the 2D structure of our thread blocks and grid is clear!
+From this output, the 2D structure of both our thread blocks and grid is clear!
 
 <font size=1>`[1]` While thread blocks can be 1-, 2-, or 3D, grids of thread blocks are limited to 1- or 2D.</font>
