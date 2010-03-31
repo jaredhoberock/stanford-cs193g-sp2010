@@ -41,7 +41,7 @@ int main(void)
 
 This program requires the non-standard files `cuPrintf.cu` and `cuPrintf.cuh', which are [http://code.google.com/p/stanford-cs193g-sp2010/source/browse/trunk/tutorials/util available] in this site's code repository.
 
-Let's compile this program by copying it to a file called `hello_world.cu`.  Even though our program looks like mostly normal C code, it's important that we use `nvcc` to compile it, as it contains special CUDA keywords and syntax that regular compilers won't recognize.  Additionally, place the files `cuPrintf.cu` and `cuPrintf.cuh` in a directory called `util` at the same level as `hello_world.cu`.  We don't need to specify a special include directory to `nvcc` since it searches the current directory by default.
+Let's compile this program by copying it to a file called `hello_world.cu`.    Additionally, place the files `cuPrintf.cu` and `cuPrintf.cuh` in a directory called `util` at the same level as `hello_world.cu`. We don't need to specify a special include directory to `nvcc` since it searches the current directory by default. Even though our program looks like mostly normal C code, it's important that we use `nvcc` to compile it, as it contains special CUDA keywords and syntax that regular compilers won't recognize.
 
 Compiling and running the program on a Mac OSX system yields
 
