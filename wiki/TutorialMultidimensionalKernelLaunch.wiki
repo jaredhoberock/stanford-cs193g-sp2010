@@ -40,10 +40,7 @@ int main(void)
   host_array = (int*)malloc(num_bytes);
   cudaMalloc((void**)&device_array, num_bytes);
 
-  // choose a two dimensional launch configuration
-  // use the dim3 type when launches are not one dimensional
-
-  // create 4x4 thread blocks
+  // create two dimensional 4x4 thread blocks
   dim3 block_size;
   block_size.x = 4;
   block_size.y = 4;
