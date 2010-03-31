@@ -3,3 +3,75 @@
 = Multidimensional Kernel Launch =
 
 The [TutorialGlobalFunctions last section] hinted that `__global__` functions might be launched using grid configurations that weren't strictly one-dimensional.  In fact, if it is convenient for describing our data parallel problem to solve, CUDA allows us to create thread blocks in 1-, 2-, or 3D.  Many problems, such as the previous section's array processing tasks, are most naturally described in a flat, linear style mimicking our mental model of C's memory layout. Other tasks, particularly those often encountered in the computational sciences, are naturally embedded in two or three dimensions.  For example, [http://www.youtube.com/results?search_query=image+processing+cuda&page=&utm_source=opensearch image processing] tasks typically impose a regular 2D raster (an image) over the problem domain.  [http://www.youtube.com/results?search_query=cuda+cfd&search_type=&aq=f Computational fluid dynamics] tasks might be most naturally expressed by partitioning a volume over a 3D grid.
+
+The following code listing demonstrates an example of a 2D kernel launch, and shows how to map two dimensional thread and block indices to the physical one dimensional layout of device memory.
+
+{{{
+#include <stdlib.h>
+#include <stdio.h>
+
+__global__ void kernel(int *array)
+{
+  int index_x = blockIdx.x * blockDim.x + threadIdx.x;
+  int index_y = blockIdx.y * blockDim.y + threadIdx.y;
+
+  // map the two 2D indices to a single linear, 1D index
+  int grid_width = gridDim.x * blockDim.x;
+  int index = index_y * grid_width + index_x;
+
+  // map the two 2D block indices to a single linear, 1D block index
+  int result = blockIdx.y * gridDim.x + blockIdx.x;
+
+  // write out the result
+  array[index] = result;
+}
+
+int main(void)
+{
+  int num_elements_x = 16;
+  int num_elements_y = 16;
+
+  int num_bytes = num_elements_x * num_elements_y * sizeof(int);
+
+  int *device_array = 0;
+  int *host_array = 0;
+
+  // allocate memory in either space
+  host_array = (int*)malloc(num_bytes);
+  cudaMalloc((void**)&device_array, num_bytes);
+
+  // choose a two dimensional launch configuration
+  // use the dim3 type when launches are not one dimensional
+
+  // create 4x4 thread blocks
+  dim3 block_size;
+  block_size.x = 4;
+  block_size.y = 4;
+
+  // configure a two dimensional grid as well
+  dim3 grid_size;
+  grid_size.x = num_elements_x / block_size.x;
+  grid_size.y = num_elements_y / block_size.y;
+
+  // grid_size & block_size are passed as arguments to the triple chevrons as usual
+  kernel<<<grid_size,block_size>>>(device_array);
+
+  // download and inspect the result on the host:
+  cudaMemcpy(host_array, device_array, num_bytes, cudaMemcpyDeviceToHost);
+
+  // print out the result element by element
+  for(int row = 0; row < num_elements_y; ++row)
+  {
+    for(int col = 0; col < num_elements_x; ++col)
+    {
+      printf("%2d ", host_array[row * num_elements_x + col]);
+    }
+    printf("\n");
+  }
+  printf("\n");
+
+  // deallocate memory
+  free(host_array);
+  cudaFree(device_array);
+}
+}}}
