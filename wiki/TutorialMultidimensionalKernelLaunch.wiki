@@ -73,7 +73,7 @@ int main(void)
 }
 }}}
 
-The host code of this example uses a type we haven't seen before: `dim3`.  In order to configure a two-dimensional grid, we pass values of this type to the triple chevrons instead of the plain integer arguments we've used before for one-dimensional kernels.  `dim3` is a simple vector type, and you can assume its definition looks something like:
+The host code of this example uses a type we haven't seen before: `dim3`.  In order to configure a two-dimensional grid, we pass values of this type to the triple chevrons instead of the plain integer arguments we've used before for one-dimensional kernels.  `dim3` is a simple vector type native to CUDA, and you can assume its definition looks something like:
 
 {{{
   struct dim3
