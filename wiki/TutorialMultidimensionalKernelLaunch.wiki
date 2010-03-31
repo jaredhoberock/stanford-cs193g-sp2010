@@ -124,7 +124,7 @@ This was necessary in order to assign each individual CUDA thread to a unique el
 
 The actual work our kernel does is trivial.  Similarly to how we assigned a unique 1D index to each CUDA thread, we used `blockIdx` and `gridDim` to assign each thread block a unique index, which we wrote out to `array`.
 
-To test the program, copy it to `two_dimensional_kernel_launch.cu`.  If you compile and run it, and you'll visualize the 2D structure of our threads:
+To test the program, copy it to a file named `two_dimensional_kernel_launch.cu`.  If you compile and run it, and you'll visualize the 2D structure of our threads:
 
 {{{
 $ nvcc two_dimensional_kernel_launch.cu -o two_dimensional_kernel_launch
