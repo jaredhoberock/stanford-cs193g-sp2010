@@ -1,0 +1,10 @@
+Q1: For part 1, look at how much time the copies to and from the gpu take, as well as the actual kernel on the gpu and the host version. 
+    Assume that all these times scale linearly with the size of the working set. You can also assume that cudaMalloc takes a fixed 5ms, no matter the allocation size.
+	-Derive a cost (execution time) model for part 1. Assume that only the fixed malloc overhead, copies to and from the gpu and the actual kernel execution matter.
+	-Plug the numbers from the computer you're working on into that equation and report what the break even point (when the cpu version is as fast as the gpu version) will be.
+	
+Q2: When analyzing computational kernels, we often consider effective bandwidth of efficiency. The effective bandwidth of a kernel is the amount of memory read + written per unit time (often expressed in GB/sec).
+    Comparing effective bandwidth to the peak bandwidth of a system can often be a good indicator of system utilization.
+    -For part 3, calculate how many bytes on average are loaded and stored per node in the graph. You may assume that each node has avg_edges number of links.
+    -Using the execution time of your CUDA kernel, the number of threads in your kernel launch and the average number of bytes read and written per node, calculate the effective bandwidth of your CUDA kernel.
+	-Look up the theoretical peak bandwidth for the GPU you're working on (Wikipedia is good enough) and calculate what fraction of that max your kernel is getting.
