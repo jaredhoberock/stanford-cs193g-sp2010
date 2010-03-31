@@ -3,3 +3,4 @@
   * [TutorialAHeterogeneousProgrammingModel A Heterogeneous Programming Model]
   * [TutorialHelloWorld Hello, world! in CUDA]
   * [TutorialGlobalFunctions CUDA __global__ functions]
+  * [TutorialMultidimensionalKernelLaunch Multidimensional Kernel Launch]
