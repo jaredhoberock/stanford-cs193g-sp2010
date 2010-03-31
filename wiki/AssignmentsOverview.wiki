@@ -1,4 +1,5 @@
 #summary Overview of the machine problems and links to individual MPs.
+#labels Featured
 
 = Overview =
 
