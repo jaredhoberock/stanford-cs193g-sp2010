@@ -113,3 +113,5 @@ int main(void)
   return 0;
 }
 }}}
+
+This is the first time we've included more than one `__global__` function in our example.  This is fine -- they're just like C functions in this way.  Note also that both `kernel1` and `kernel2` can call any of the `__device__` functions they can "see".  The usual C/C++ [http://en.wikipedia.org/wiki/Scope_(programming) scoping] rules apply.
