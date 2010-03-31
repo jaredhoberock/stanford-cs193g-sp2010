@@ -2,7 +2,7 @@
 
 = Multidimensional Kernel Launch =
 
-The [TutorialGlobalFunctions last section] hinted that `__global__` functions might be launched using grid configurations that weren't strictly one-dimensional.  In fact, if it is convenient for describing our data parallel problem, CUDA allows us to create thread blocks in 1-, 2-, or 3D.  Many problems, such as the previous section's array processing tasks, are most naturally described in a flat, linear style mimicking our mental model of C's memory layout. Other tasks, particularly those often encountered in the computational sciences, are naturally embedded in two or three dimensions.  For example, [http://www.youtube.com/results?search_query=image+processing+cuda&page=&utm_source=opensearch image processing] tasks typically impose a regular 2D raster (an image) over the problem domain.  [http://www.youtube.com/results?search_query=cuda+cfd&search_type=&aq=f Computational fluid dynamics] tasks might be most naturally expressed by partitioning a volume over a 3D grid.
+The [TutorialGlobalFunctions last section] hinted that `__global__` functions might be launched using grid configurations that weren't strictly one-dimensional.  In fact, if it is convenient for describing our data parallel problem, CUDA allows us to create thread blocks in 1-, 2-, or 3D. `[1]`  Many problems, such as the previous section's array processing tasks, are most naturally described in a flat, linear style mimicking our mental model of C's memory layout. Other tasks, particularly those often encountered in the computational sciences, are naturally embedded in two or three dimensions.  For example, [http://www.youtube.com/results?search_query=image+processing+cuda&page=&utm_source=opensearch image processing] tasks typically impose a regular 2D raster (an image) over the problem domain.  [http://www.youtube.com/results?search_query=cuda+cfd&search_type=&aq=f Computational fluid dynamics] tasks might be most naturally expressed by partitioning a volume over a 3D grid.
 
 The following code listing demonstrates an example of a 2D kernel launch, and shows how to map two dimensional thread and block indices to the physical one dimensional layout of device memory.
 
@@ -148,3 +148,5 @@ $ ./two_dimensional_kernel_launch
 }}}
 
 From this output, the 2D structure of our thread blocks and grid is clear!
+
+<font size=1>`[1]` While thread blocks can be 1-, 2-, or 3D, grids of thread blocks are limited to 1- or 2D.</font>
