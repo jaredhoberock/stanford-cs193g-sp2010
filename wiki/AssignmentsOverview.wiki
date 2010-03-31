@@ -17,4 +17,4 @@ The grade for each MP is made up as follows:
 
 = Links to MP Pages =
 
-[http://code.google.com/p/stanford-cs193g-sp2010/wiki/MpOne MP1]
+[MpOne MP1]
