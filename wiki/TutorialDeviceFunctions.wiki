@@ -1,0 +1,6 @@
+#summary Introducing CUDA `__device__` functions.
+
+= `__device__` Functions =
+
+Add your content here.
+
