@@ -56,14 +56,14 @@ void host_force_eval(float4 *set_A, float4 *set_B, int * indices, float4 *force_
 
 __global__ void force_eval(float4 *set_A, float4 *set_B, int * indices, float4 *force_vectors, int array_length)
 {
-  // your code here ...
+  // TODO your code here ...
 }
 
 
 
 void host_charged_particles(float4 *h_set_A, float4 *h_set_B, int *h_indices, float4 *h_force_vectors, int num_elements)
 { 
-  // your code here ...
+  // TODO your code here ...
   
   start_timer(&timer);
   // launch kernel
@@ -73,7 +73,7 @@ void host_charged_particles(float4 *h_set_A, float4 *h_set_B, int *h_indices, fl
   check_launch("gpu force eval");
   stop_timer(&timer,"gpu force eval");
   
-  // more code here...
+  // TODO more code here...
 }
 
 

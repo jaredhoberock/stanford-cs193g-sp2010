@@ -26,7 +26,7 @@
 // __global__ functions must return void, and may only be called or "launched" from code that
 // executes on the CPU.
 
-void host_shift_cypher(uint *input_array, uint *output_array, int shift_amount, int alphabet_max, int array_length)
+void host_shift_cypher(unsigned int *input_array, unsigned int *output_array, int shift_amount, int alphabet_max, int array_length)
 {
   int i;
   for(i=0;i<array_length;i++)
@@ -37,15 +37,15 @@ void host_shift_cypher(uint *input_array, uint *output_array, int shift_amount, 
     {
       shifted = shifted % (alphabet_max + 1);
     }
-    output_array[i] = (uint)shifted;
+    output_array[i] = (unsigned int)shifted;
   }
 }
 
 
 // This kernel implements a per element shift
-__global__ void shift_cypher(uint *input_array, uint *output_array, int shift_amount, int alphabet_max, int array_length)
+__global__ void shift_cypher(unsigned int *input_array, unsigned int *output_array, unsigned int shift_amount, unsigned int alphabet_max, unsigned int array_length)
 {
-  // your code here
+  // TODO your code here
 }
 
 
@@ -61,22 +61,22 @@ int main(void)
   int alphabet_max = 45647;
   
   // compute the size of the arrays in bytes
-  int num_bytes = num_elements * sizeof(uint);
+  int num_bytes = num_elements * sizeof(unsigned int);
 
   // pointers to host & device arrays
-  uint *host_input_array = 0;
-  uint *host_output_array = 0;
-  uint *host_output_checker_array = 0;
-  uint *device_input_array = 0;
-  uint *device_output_array = 0;
+  unsigned int *host_input_array = 0;
+  unsigned int *host_output_array = 0;
+  unsigned int *host_output_checker_array = 0;
+  unsigned int *device_input_array = 0;
+  unsigned int *device_output_array = 0;
   
   event_pair timer;
   
 
   // malloc host arrays
-  host_input_array = (uint*)malloc(num_bytes);
-  host_output_array = (uint*)malloc(num_bytes);
-  host_output_checker_array = (uint*)malloc(num_bytes);
+  host_input_array = (unsigned int*)malloc(num_bytes);
+  host_output_array = (unsigned int*)malloc(num_bytes);
+  host_output_checker_array = (unsigned int*)malloc(num_bytes);
 
   // cudaMalloc device arrays
   cudaMalloc((void**)&device_input_array, num_bytes);
@@ -96,7 +96,7 @@ int main(void)
   
   for(int i=0;i< num_elements;i++)
   {
-    host_input_array[i] = (uint)rand(); 
+    host_input_array[i] = (unsigned int)rand(); 
   }
   
   // do copies to and from gpu once to get rid of timing weirdness

@@ -11,12 +11,15 @@
 #include <stdio.h>
 #include <assert.h>
 #include <ctime>
+#include <limits>
 
 #include "mp1-util.h"
 
 event_pair timer;
+
+const float epsilon = 0.0000001f;
  
-void host_graph_propagate(uint *graph_indices, uint *graph_edges, float *graph_nodes_in, float *graph_nodes_out, float * inv_edges_per_node, int array_length)
+void host_graph_propagate(unsigned int *graph_indices, unsigned int *graph_edges, float *graph_nodes_in, float *graph_nodes_out, float * inv_edges_per_node, int array_length)
 {
   for(int i=0; i < array_length; i++)
   {
@@ -30,7 +33,7 @@ void host_graph_propagate(uint *graph_indices, uint *graph_edges, float *graph_n
 }
 
 
-void host_graph_iterate(uint *graph_indices, uint *graph_edges, float *graph_nodes_A, float *graph_nodes_B, float * inv_edges_per_node, int nr_iterations, int array_length)
+void host_graph_iterate(unsigned int *graph_indices, unsigned int *graph_edges, float *graph_nodes_A, float *graph_nodes_B, float * inv_edges_per_node, int nr_iterations, int array_length)
 {
   assert((nr_iterations % 2) == 0);
   for(int iter = 0; iter < nr_iterations; iter+=2)
@@ -41,20 +44,29 @@ void host_graph_iterate(uint *graph_indices, uint *graph_edges, float *graph_nod
 }
 
 
-// your kernel code here
+// TODO your kernel code here
 
 
 
-void host_cuda_graph_iterate(uint *h_graph_indices, uint *h_graph_edges, float *h_graph_nodes_A, float *h_graph_nodes_B, float *h_inv_edges_per_node, int nr_iterations, int num_elements, int avg_edges)
+void device_graph_iterate(unsigned int *h_graph_indices,
+                          unsigned int *h_graph_edges,
+                          float *h_graph_nodes_input,
+                          float *h_graph_nodes_result,
+                          float *h_inv_edges_per_node,
+                          int nr_iterations,
+                          int num_elements,
+                          int avg_edges)
 {
-  // all of your gpu memory allocation and copying to gpu memory has to be in this function
+  // TODO all of your gpu memory allocation and copying to gpu memory has to be in this function
 
   start_timer(&timer);
 
-  // your kernel launch code should go here, so you can measure how long it takes
+  // TODO your device code should go here, so you can measure how long it takes
   
   check_launch("gpu graph propagate");
   stop_timer(&timer,"gpu graph propagate");
+
+  // TODO your final result should end up in h_graph_nodes_result, which is a *host* pointer
 }
 
 
@@ -66,11 +78,11 @@ int main(void)
   int iterations = 20;
   
   // pointers to host & device arrays
-  uint *h_graph_indices = 0;
+  unsigned int *h_graph_indices = 0;
   float *h_inv_edges_per_node = 0;
-  uint *h_graph_edges = 0;
-  float *h_graph_nodes_A = 0;
-  float *h_graph_nodes_B = 0;
+  unsigned int *h_graph_edges = 0;
+  float *h_graph_nodes_input = 0;
+  float *h_graph_nodes_result = 0;
   float *h_graph_nodes_checker_A = 0;
   float *h_graph_nodes_checker_B = 0;
   
@@ -78,16 +90,16 @@ int main(void)
   // malloc host array
   // index array has to be n+1 so that the last thread can 
   // still look at its neighbor for a stopping point
-  h_graph_indices = (uint*)malloc((num_elements+1) * sizeof(uint));
+  h_graph_indices = (unsigned int*)malloc((num_elements+1) * sizeof(unsigned int));
   h_inv_edges_per_node = (float*)malloc((num_elements) * sizeof(float));
-  h_graph_edges = (uint*)malloc(num_elements * avg_edges * sizeof(uint));
-  h_graph_nodes_A = (float*)malloc(num_elements * sizeof(float));
-  h_graph_nodes_B = (float*)malloc(num_elements * sizeof(float));
+  h_graph_edges = (unsigned int*)malloc(num_elements * avg_edges * sizeof(unsigned int));
+  h_graph_nodes_input = (float*)malloc(num_elements * sizeof(float));
+  h_graph_nodes_result = (float*)malloc(num_elements * sizeof(float));
   h_graph_nodes_checker_A = (float*)malloc(num_elements * sizeof(float));
   h_graph_nodes_checker_B = (float*)malloc(num_elements * sizeof(float));
   
   // if any memory allocation failed, report an error message
-  if(h_graph_indices == 0 || h_graph_edges == 0 || h_graph_nodes_A == 0 || h_graph_nodes_B == 0 || 
+  if(h_graph_indices == 0 || h_graph_edges == 0 || h_graph_nodes_input == 0 || h_graph_nodes_result == 0 || 
 	 h_inv_edges_per_node == 0 || h_graph_nodes_checker_A == 0 || h_graph_nodes_checker_B == 0)
   {
     printf("couldn't allocate memory\n");
@@ -101,24 +113,25 @@ int main(void)
   h_graph_indices[0] = 0;
   for(int i=0;i< num_elements;i++)
   {
-	int nr_edges = (i % 15) + 1;
-	h_inv_edges_per_node[i] = 1.f/(float)nr_edges;
-	h_graph_indices[i+1] = h_graph_indices[i] + nr_edges;
-	if(h_graph_indices[i+1] >= (num_elements * avg_edges))
-	{
-	  printf("more edges than we have space for\n");
-	  exit(1);
-	}
-	for(int j=h_graph_indices[i];j<h_graph_indices[i+1];j++)
-	{
-	  h_graph_edges[j] = rand() % num_elements;
-	}
-
-	h_graph_nodes_A[i] =  1.f/(float)num_elements;
-	h_graph_nodes_checker_A[i] =  h_graph_nodes_A[i];
+    int nr_edges = (i % 15) + 1;
+    h_inv_edges_per_node[i] = 1.f/(float)nr_edges;
+    h_graph_indices[i+1] = h_graph_indices[i] + nr_edges;
+    if(h_graph_indices[i+1] >= (num_elements * avg_edges))
+    {
+      printf("more edges than we have space for\n");
+      exit(1);
+    }
+    for(int j=h_graph_indices[i];j<h_graph_indices[i+1];j++)
+    {
+      h_graph_edges[j] = rand() % num_elements;
+    }
+    
+    h_graph_nodes_input[i] =  1.f/(float)num_elements;
+    h_graph_nodes_checker_A[i] =  h_graph_nodes_input[i];
+    h_graph_nodes_result[i] = std::numeric_limits<float>::infinity();
   }
   
-  host_cuda_graph_iterate(h_graph_indices, h_graph_edges, h_graph_nodes_A, h_graph_nodes_B, h_inv_edges_per_node, iterations, num_elements, avg_edges);
+  device_graph_iterate(h_graph_indices, h_graph_edges, h_graph_nodes_input, h_graph_nodes_result, h_inv_edges_per_node, iterations, num_elements, avg_edges);
   
   start_timer(&timer);
   // generate reference output
@@ -131,11 +144,12 @@ int main(void)
   int error = 0;
   for(int i=0;i<num_elements;i++)
   {
-    float n = h_graph_nodes_A[i];
+    float n = h_graph_nodes_result[i];
     float c = h_graph_nodes_checker_A[i];
-    if((n - c)*(n - c) > 0.0001f) 
+    if((n - c)*(n - c) > epsilon) 
     {
-      printf("%d:%.3f::",i,h_graph_nodes_A[i] - h_graph_nodes_checker_A[i]);
+      // TODO enable this only if you have a small number of spurious errors to track down
+      //printf("%d:%.3f::",i, n-c);
       error = 1;
     }
   }
@@ -153,8 +167,8 @@ int main(void)
   free(h_graph_indices);
   free(h_inv_edges_per_node);
   free(h_graph_edges);
-  free(h_graph_nodes_A);
-  free(h_graph_nodes_B);
+  free(h_graph_nodes_input);
+  free(h_graph_nodes_result);
   free(h_graph_nodes_checker_A);
   free(h_graph_nodes_checker_B);
 }
