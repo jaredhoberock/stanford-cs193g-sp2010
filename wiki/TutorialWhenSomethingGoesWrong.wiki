@@ -1,0 +1,29 @@
+#summary Detecting CUDA errors.
+
+= When something goes wrong =
+
+In the past few sections, we've learned how to [TutorialAHeterogeneousProgrammingModel allocate and manage device memory], [TutorialGlobalFunctions write kernels] which execute in parallel and in [TutorialMultidimensionalKernelLaunch multiple dimensions], and [TutorialDeviceFunctions decompose our device code into functions] so that our kernels may grow ever more sophisticated. By now, we have all the basic tools needed to start building non-trivial parallel applications. On the other hand, these tools we've collected also enable us to write buggy programs. With hundreds of thousands of threads come hundreds of thousands of things which could go wrong. This section discusses how to detect and deal with errors as soon as they occur.
+
+To get started, let's write a buggy program that's obviously incorrect just to see what happens.
+
+{{{
+__global__ void foo(int *ptr)
+{
+  *ptr = 7;
+}
+
+int main(void)
+{
+  foo<<<1,1>>>(0);
+  return 0;
+}
+}}}
+
+This program doesn't even bother to allocate device memory -- it just passes a null pointer to a kernel which immediately writes to it. This is a rather blatant instance of a common programming error -- dereferencing a null pointer. Any sane program would sooner crash than attempt something so heinous. However, when I compile and run this program on my system, my screen flashes, but otherwise there's no indication that something went wrong:
+
+{{{
+$ nvcc error.cu
+$ ./error
+}}}
+
+Most C and C++ programmers would probably be used to some sort of immediate feedback that exceptional program behavior has occurred.  A debugging window might open, or a error message might be automatically written to the terminal indicating a [http://en.wikipedia.org/wiki/Segmentation_fault segmentation fault]. However, in a CUDA program, if we suspect an error has occurred during a kernel launch, then we must explicitly check for it after the kernel has executed.
