@@ -153,4 +153,4 @@ Here, we've used the built-in preprocessor variables, `__FILE__` and `__LINE__`,
 
 Expanded source code for this example is [http://code.google.com/p/stanford-cs193g-sp2010/source/browse/trunk/tutorials/cuda_errors.cu available] in the site's code repository.
 
-<br><font size=1>[1] Human-readable, but still somewhat obtuse: "unspecified launch error" usually means a bad pointer has been dereferenced, or in other words, a crash.</size>
+<br><font size=1>[1] Human-readable, but still somewhat obtuse: "unspecified launch error" usually means a bad pointer has been dereferenced, or in other words, a crash.</font>
