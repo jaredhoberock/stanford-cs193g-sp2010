@@ -151,5 +151,4 @@ From this output, the 2D structure of both our thread blocks and grid is clear!
 
 Our [TutorialDeviceFunctions next section] introduces `__device__` functions.
 
-
-<font size=1>`[1]` While thread blocks can be 1-, 2-, or 3D, grids of thread blocks are limited to 1- or 2D.</font>
+<br><font size=1>`[1]` While thread blocks can be 1-, 2-, or 3D, grids of thread blocks are limited to 1- or 2D.</font>
