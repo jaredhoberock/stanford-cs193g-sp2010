@@ -26,4 +26,4 @@ $ nvcc crash.cu -o crash
 $ ./crash
 }}}
 
-Most C and C++ programmers would probably be used to some sort of immediate feedback that exceptional program behavior has occurred.  A debugging window might open, or a error message might be automatically written to the terminal indicating a [http://en.wikipedia.org/wiki/Segmentation_fault segmentation fault]. However, in a CUDA program, if we suspect an error has occurred during a kernel launch, then we must explicitly check for it after the kernel has executed.
+Most C and C++ programmers would probably be used to some sort of immediate feedback that some sort of funny business is going on.  A debugging window might open, or a error message might be automatically written to the terminal indicating a [http://en.wikipedia.org/wiki/Segmentation_fault segmentation fault]. However, in a CUDA program, if we suspect an error has occurred during a kernel launch, then we must explicitly check for it after the kernel has executed.
