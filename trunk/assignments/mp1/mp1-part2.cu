@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "mp1-util.cu"
+#include "mp1-util.h"
 
 #define EPSILON 0.00001f
 
@@ -22,45 +22,45 @@ event_pair timer;
   
 float4 force_calc(float4 A, float4 B) 
 {
-	float x = B.x - A.x;
-	float y = B.y - A.y;
-	float z = B.z - A.z;
-	float rsq = x*x + y*y + z*z;
-	// avoid divide by zero
-	if(rsq < EPSILON)
-	{
-		rsq += EPSILON;
-	}
-	float r = sqrt(rsq);
-	float f = A.w * B.w / rsq;
-	float inv_r = 1.0f / r;
-	float4 fv = make_float4(x*inv_r,y*inv_r,z*inv_r,f);
-	return fv;
+  float x = B.x - A.x;
+  float y = B.y - A.y;
+  float z = B.z - A.z;
+  float rsq = x*x + y*y + z*z;
+  // avoid divide by zero
+  if(rsq < EPSILON)
+  {
+    rsq += EPSILON;
+  }
+  float r = sqrt(rsq);
+  float f = A.w * B.w / rsq;
+  float inv_r = 1.0f / r;
+  float4 fv = make_float4(x*inv_r,y*inv_r,z*inv_r,f);
+  return fv;
 }
  
 void host_force_eval(float4 *set_A, float4 *set_B, int * indices, float4 *force_vectors, int array_length)
 {
-	for(int i=0;i<array_length;i++)
-	{
-		if(indices[i] < array_length && indices[i] >= 0)
-		{
-			force_vectors[i] = force_calc(set_A[i],set_B[indices[i]]);
-		}
-		else {
-			force_vectors[i] = make_float4(0.0,0.0,0.0,0.0);
-		}
-	}
+  for(int i=0;i<array_length;i++)
+  {
+    if(indices[i] < array_length && indices[i] >= 0)
+    {
+      force_vectors[i] = force_calc(set_A[i],set_B[indices[i]]);
+    }
+    else
+    {
+      force_vectors[i] = make_float4(0.0,0.0,0.0,0.0);
+    }
+  }
 }
 
 
 __global__ void force_eval(float4 *set_A, float4 *set_B, int * indices, float4 *force_vectors, int array_length)
 {
-	// your code here ...
+  // your code here ...
 }
 
 
 
-// 
 void host_charged_particles(float4 *h_set_A, float4 *h_set_B, int *h_indices, float4 *h_force_vectors, int num_elements)
 { 
   // your code here ...
@@ -75,6 +75,7 @@ void host_charged_particles(float4 *h_set_A, float4 *h_set_B, int *h_indices, fl
   
   // more code here...
 }
+
 
 int main(void)
 {
@@ -108,11 +109,11 @@ int main(void)
   // generate random input
   for(int i=0;i< num_elements;i++)
   {
-	h_set_A[i] = make_float4(rand(),rand(),rand(),rand()); 
-	h_set_B[i] = make_float4(rand(),rand(),rand(),rand());
-	// some indices will be invalid
-	h_indices[i] = rand() % (num_elements + 2);
-	
+    h_set_A[i] = make_float4(rand(),rand(),rand(),rand()); 
+    h_set_B[i] = make_float4(rand(),rand(),rand(),rand());
+
+    // some indices will be invalid
+    h_indices[i] = rand() % (num_elements + 2);
   }
   
   start_timer(&timer);
@@ -130,25 +131,26 @@ int main(void)
   
   for(int i=0;i<num_elements;i++)
   {
-	float4 v = h_force_vectors[i];
-	float4 vc = h_force_vectors_checker[i];
-	if( (v.x - vc.x)*(v.x - vc.x) > EPSILON ||
-		(v.y - vc.y)*(v.y - vc.y) > EPSILON ||
-		(v.z - vc.z)*(v.z - vc.z) > EPSILON ||
-		(v.w - vc.w)*(v.w - vc.w) > EPSILON) 
-	{ 
-		error = 1;
-	}
-	
+    float4 v = h_force_vectors[i];
+    float4 vc = h_force_vectors_checker[i];
+
+    if( (v.x - vc.x)*(v.x - vc.x) > EPSILON ||
+    	(v.y - vc.y)*(v.y - vc.y) > EPSILON ||
+    	(v.z - vc.z)*(v.z - vc.z) > EPSILON ||
+    	(v.w - vc.w)*(v.w - vc.w) > EPSILON) 
+    { 
+      error = 1;
+    }
   }
   printf("\n");
   
   if(error)
   {
-	printf("Output of CUDA version and normal version didn't match! \n");
+    printf("Output of CUDA version and normal version didn't match! \n");
   }
-  else {
-	printf("Worked! CUDA and reference output match. \n");
+  else
+  {
+    printf("Worked! CUDA and reference output match. \n");
   }
  
   // deallocate memory

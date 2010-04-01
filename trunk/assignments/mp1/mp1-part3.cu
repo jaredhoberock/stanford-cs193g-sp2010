@@ -12,39 +12,41 @@
 #include <assert.h>
 #include <ctime>
 
-#include "mp1-util.cu"
+#include "mp1-util.h"
 
 event_pair timer;
  
 void host_graph_propagate(uint *graph_indices, uint *graph_edges, float *graph_nodes_in, float *graph_nodes_out, float * inv_edges_per_node, int array_length)
 {
-	for(int i=0;i<array_length;i++)
-	{
-		float sum = 0.f; 
-		for(int j=graph_indices[i];j<graph_indices[i+1];j++)
-		{
-			sum += graph_nodes_in[graph_edges[j]]*inv_edges_per_node[graph_edges[j]];
-		}
-		graph_nodes_out[i] = 0.5f/(float)array_length + 0.5f*sum;
-	}
+  for(int i=0; i < array_length; i++)
+  {
+    float sum = 0.f; 
+    for(int j = graph_indices[i]; j < graph_indices[i+1]; j++)
+    {
+      sum += graph_nodes_in[graph_edges[j]]*inv_edges_per_node[graph_edges[j]];
+    }
+    graph_nodes_out[i] = 0.5f/(float)array_length + 0.5f*sum;
+  }
 }
+
 
 void host_graph_iterate(uint *graph_indices, uint *graph_edges, float *graph_nodes_A, float *graph_nodes_B, float * inv_edges_per_node, int nr_iterations, int array_length)
 {
-	assert((nr_iterations % 2) == 0);
-	int iter=0;
-	for(;iter<nr_iterations;iter+=2)
-	{
-		host_graph_propagate(graph_indices, graph_edges, graph_nodes_A, graph_nodes_B, inv_edges_per_node, array_length);
-		host_graph_propagate(graph_indices, graph_edges, graph_nodes_B, graph_nodes_A, inv_edges_per_node, array_length);
-	}
+  assert((nr_iterations % 2) == 0);
+  for(int iter = 0; iter < nr_iterations; iter+=2)
+  {
+    host_graph_propagate(graph_indices, graph_edges, graph_nodes_A, graph_nodes_B, inv_edges_per_node, array_length);
+    host_graph_propagate(graph_indices, graph_edges, graph_nodes_B, graph_nodes_A, inv_edges_per_node, array_length);
+  }
 }
+
 
 // your kernel code here
 
+
+
 void host_cuda_graph_iterate(uint *h_graph_indices, uint *h_graph_edges, float *h_graph_nodes_A, float *h_graph_nodes_B, float *h_inv_edges_per_node, int nr_iterations, int num_elements, int avg_edges)
 {
-  
   // all of your gpu memory allocation and copying to gpu memory has to be in this function
 
   start_timer(&timer);
@@ -53,9 +55,8 @@ void host_cuda_graph_iterate(uint *h_graph_indices, uint *h_graph_edges, float *
   
   check_launch("gpu graph propagate");
   stop_timer(&timer,"gpu graph propagate");
-  
-  
 }
+
 
 int main(void)
 {
@@ -100,20 +101,19 @@ int main(void)
   h_graph_indices[0] = 0;
   for(int i=0;i< num_elements;i++)
   {
-	// FIXME: better randomization of number of edges
 	int nr_edges = (i % 15) + 1;
 	h_inv_edges_per_node[i] = 1.f/(float)nr_edges;
 	h_graph_indices[i+1] = h_graph_indices[i] + nr_edges;
 	if(h_graph_indices[i+1] >= (num_elements * avg_edges))
 	{
-		printf("more edges than we have space for\n");
-		exit(1);
+	  printf("more edges than we have space for\n");
+	  exit(1);
 	}
 	for(int j=h_graph_indices[i];j<h_graph_indices[i+1];j++)
 	{
-		h_graph_edges[j] = rand() % num_elements;
+	  h_graph_edges[j] = rand() % num_elements;
 	}
-	// FIXME: better randomization of input vector
+
 	h_graph_nodes_A[i] =  1.f/(float)num_elements;
 	h_graph_nodes_checker_A[i] =  h_graph_nodes_A[i];
   }
@@ -131,22 +131,22 @@ int main(void)
   int error = 0;
   for(int i=0;i<num_elements;i++)
   {
-	float n = h_graph_nodes_A[i];
-	float c = h_graph_nodes_checker_A[i];
-	if((n - c)*(n - c) > 0.0001f) 
-	{
-		printf("%d:%.3f::",i,h_graph_nodes_A[i] - h_graph_nodes_checker_A[i]);
-		error = 1;
-	}
-	
+    float n = h_graph_nodes_A[i];
+    float c = h_graph_nodes_checker_A[i];
+    if((n - c)*(n - c) > 0.0001f) 
+    {
+      printf("%d:%.3f::",i,h_graph_nodes_A[i] - h_graph_nodes_checker_A[i]);
+      error = 1;
+    }
   }
   
   if(error)
   {
-	printf("Output of CUDA version and normal version didn't match! \n");
+    printf("Output of CUDA version and normal version didn't match! \n");
   }
-  else {
-	printf("Worked! CUDA and reference output match. \n");
+  else
+  {
+    printf("Worked! CUDA and reference output match. \n");
   }
 
   // deallocate memory

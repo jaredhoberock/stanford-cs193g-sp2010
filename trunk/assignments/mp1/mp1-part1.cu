@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <ctime>
 
-#include <mp1-util.cu>
+#include "mp1-util.h"
 
 
 // Repeating from the tutorial, just in case you haven't looked at it.
@@ -28,24 +28,24 @@
 
 void host_shift_cypher(uint *input_array, uint *output_array, int shift_amount, int alphabet_max, int array_length)
 {
-	int i;
-	for(i=0;i<array_length;i++)
-	{
-		int element = input_array[i];
-		int shifted = element + shift_amount;
-		if(shifted > alphabet_max || shifted < 0)
-		{
-			shifted = shifted % (alphabet_max + 1);
-		}
-		output_array[i] = (uint)shifted;
-	}
+  int i;
+  for(i=0;i<array_length;i++)
+  {
+    int element = input_array[i];
+    int shifted = element + shift_amount;
+    if(shifted > alphabet_max || shifted < 0)
+    {
+      shifted = shifted % (alphabet_max + 1);
+    }
+    output_array[i] = (uint)shifted;
+  }
 }
 
 
 // This kernel implements a per element shift
 __global__ void shift_cypher(uint *input_array, uint *output_array, int shift_amount, int alphabet_max, int array_length)
 {
-	// your code here
+  // your code here
 }
 
 
@@ -96,7 +96,7 @@ int main(void)
   
   for(int i=0;i< num_elements;i++)
   {
-	host_input_array[i] = (uint)rand(); 
+    host_input_array[i] = (uint)rand(); 
   }
   
   // do copies to and from gpu once to get rid of timing weirdness
@@ -137,19 +137,19 @@ int main(void)
   int error = 0;
   for(int i=0;i<num_elements;i++)
   {
-	if(host_output_array[i] != host_output_checker_array[i]) 
-	{ 
-		error = 1;
-	}
-	
+    if(host_output_array[i] != host_output_checker_array[i]) 
+    { 
+      error = 1;
+    }
   }
   
   if(error)
   {
-	printf("Output of CUDA version and normal version didn't match! \n");
+    printf("Output of CUDA version and normal version didn't match! \n");
   }
-  else {
-	printf("Worked! CUDA and reference output match. \n");
+  else
+  {
+    printf("Worked! CUDA and reference output match. \n");
   }
  
   // deallocate memory
