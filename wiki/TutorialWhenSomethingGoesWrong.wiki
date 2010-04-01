@@ -2,7 +2,7 @@
 
 = When something goes wrong =
 
-In the past few sections, we've learned how to [TutorialAHeterogeneousProgrammingModel allocate and manage device memory], [TutorialGlobalFunctions write kernels] which execute in parallel and in [TutorialMultidimensionalKernelLaunch multiple dimensions], and [TutorialDeviceFunctions decompose our device code into functions] so that our kernels may grow ever more sophisticated. By now, we have all the basic tools needed to start building non-trivial parallel applications. On the other hand, these tools we've collected also enable us to write buggy programs. With hundreds of thousands of threads come hundreds of thousands of things which could go wrong. This section discusses how to detect and deal with errors as soon as they occur.
+In the past few sections, we've learned how to [TutorialAHeterogeneousProgrammingModel allocate and manage device memory], [TutorialGlobalFunctions write kernels] which execute in parallel and in [TutorialMultidimensionalKernelLaunch multiple dimensions], and [TutorialDeviceFunctions decompose our device code into functions] so that our kernels may grow ever more sophisticated. By now, we have all the basic tools needed to start thinking about building non-trivial parallel applications. On the other hand, these tools we've collected also enable us to write buggy programs. With hundreds of thousands of threads come hundreds of thousands of things which could go wrong. This section discusses how to detect and deal with errors as soon as they occur.
 
 To get started, let's write a buggy program that's obviously incorrect just to see what happens.
 
