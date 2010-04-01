@@ -75,7 +75,7 @@ $ ./check_for_error
 CUDA error: unspecified launch failure
 }}}
 
-Note that we've used the function `cudaGetErrorString` to conveniently turn the enumerated variable, `error`, into human-readable form. This saves us the hassle of looking up the error description in a table somewhere.
+Note that we've used the function `cudaGetErrorString` to conveniently turn the enumerated variable, `error`, into human-readable form [1]. This saves us the hassle of looking up the error description in a table somewhere.
 
 In this example, we've explicitly synchronized with the device in order to check its error status, but many CUDA Runtime functions are already implicitly synchronous and return the current error status as a result.  For example, consider the next code listing which demands an unreasonable sum of memory from `cudaMalloc`:
 
@@ -152,3 +152,5 @@ CUDA error at debug_errors.cu:25: unspecified launch failure
 Here, we've used the built-in preprocessor variables, `__FILE__` and `__LINE__`, to easily identify where in the code the error occurred.
 
 Expanded source code for this example is [http://code.google.com/p/stanford-cs193g-sp2010/source/browse/trunk/tutorials/cuda_errors.cu available] in the site's code repository.
+
+<br><font size=1>[1] Human-readable, but still somewhat obtuse: "unspecified launch error" usually means a bad pointer has been dereferenced, or in other words, a crash.</size>
