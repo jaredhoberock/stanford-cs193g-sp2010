@@ -5,3 +5,4 @@
   * [TutorialGlobalFunctions CUDA __global__ functions]
   * [TutorialMultidimensionalKernelLaunch Multidimensional Kernel Launch]
   * [TutorialDeviceFunctions CUDA __device__ functions]
+  * [TutorialWhenSomethingGoesWrong When something goes wrong]
