@@ -22,7 +22,7 @@ int main(void)
 This program doesn't even bother to allocate device memory -- it just passes a null pointer to a kernel which immediately writes to it. This is a rather blatant instance of a common programming error -- dereferencing a null pointer. Any sane program would sooner crash than attempt something so heinous. However, when I compile and run this program on my system, my screen flashes, but otherwise there's no indication that something went wrong:
 
 {{{
-$ nvcc error.cu
+$ nvcc error.cu -o error
 $ ./error
 }}}
 
