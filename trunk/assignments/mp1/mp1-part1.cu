@@ -26,24 +26,23 @@
 // __global__ functions must return void, and may only be called or "launched" from code that
 // executes on the CPU.
 
-void host_shift_cypher(unsigned int *input_array, unsigned int *output_array, int shift_amount, int alphabet_max, int array_length)
+void host_shift_cypher(unsigned int *input_array, unsigned int *output_array, unsigned int shift_amount, unsigned int alphabet_max, unsigned int array_length)
 {
-  int i;
-  for(i=0;i<array_length;i++)
+  for(unsigned int i=0;i<array_length;i++)
   {
     int element = input_array[i];
     int shifted = element + shift_amount;
-    if(shifted > alphabet_max || shifted < 0)
+    if(shifted > alphabet_max)
     {
       shifted = shifted % (alphabet_max + 1);
     }
-    output_array[i] = (unsigned int)shifted;
+    output_array[i] = shifted;
   }
 }
 
 
 // This kernel implements a per element shift
-__global__ void shift_cypher(unsigned int *input_array, unsigned int *output_array, int shift_amount, int alphabet_max, int array_length)
+__global__ void shift_cypher(unsigned int *input_array, unsigned int *output_array, unsigned int shift_amount, unsigned int alphabet_max, unsigned int array_length)
 {
   // TODO your code here
 }
@@ -58,7 +57,7 @@ int main(void)
   int num_elements = 1 << 24;
 
   
-  int alphabet_max = 45647;
+  unsigned int alphabet_max = 45647;
   
   // compute the size of the arrays in bytes
   int num_bytes = num_elements * sizeof(unsigned int);
@@ -92,7 +91,7 @@ int main(void)
 
 
   // generate random input string
-  int shift_amount = rand();
+  unsigned int shift_amount = rand();
   
   for(int i=0;i< num_elements;i++)
   {
@@ -114,7 +113,7 @@ int main(void)
   // we use 512 threads here
   int block_size = 512;
 
-  int grid_size = num_elements / block_size;
+  int grid_size = (num_elements + block_size - 1) / block_size;
 
   start_timer(&timer);
   // launch kernel
