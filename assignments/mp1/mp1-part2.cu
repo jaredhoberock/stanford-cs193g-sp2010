@@ -134,10 +134,10 @@ int main(void)
     float4 v = h_force_vectors[i];
     float4 vc = h_force_vectors_checker[i];
 
-    if( (v.x - vc.x)*(v.x - vc.x) > EPSILON ||
-    	(v.y - vc.y)*(v.y - vc.y) > EPSILON ||
-    	(v.z - vc.z)*(v.z - vc.z) > EPSILON ||
-    	(v.w - vc.w)*(v.w - vc.w) > EPSILON) 
+    if( abs((v.x - vc.x)/vc.x) > EPSILON ||
+    	abs((v.y - vc.y)/vc.y) > EPSILON ||
+    	abs((v.z - vc.z)/vc.z) > EPSILON ||
+    	abs((v.w - vc.w)/vc.w) > EPSILON) 
     { 
       error = 1;
     }

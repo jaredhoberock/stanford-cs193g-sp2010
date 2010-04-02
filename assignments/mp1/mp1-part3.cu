@@ -146,7 +146,7 @@ int main(void)
   {
     float n = h_graph_nodes_result[i];
     float c = h_graph_nodes_checker_A[i];
-    if((n - c)*(n - c) > epsilon) 
+    if(abs((n - c)/c) > epsilon) 
     {
       // TODO enable this only if you have a small number of spurious errors to track down
       //printf("%d:%.3f::",i, n-c);
