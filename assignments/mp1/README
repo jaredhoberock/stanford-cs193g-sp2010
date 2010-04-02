@@ -1,5 +1,24 @@
 Welcome to the first Machine Problem!
 
+DUE DATE: Thu April 8, 11:59pm
+
+SUBMISSION INSTRUCTIONS
+=========================
+
+You can submit an assignment from any of the cluster machines by using
+our submit script. Th submit script bundles the entire current directory into
+a submission. Thus, you use it by CDing to a the directory for your assignment,
+and running:
+
+  > cd *some directory*
+  > /usr/class/cs193g/bin/submit mp1
+
+This will submit the current directory as your assignment. You can submit
+as many times as you want, and we will use your last submission.
+
+RUNNING THE ASSIGNMENT
+=======================
+
 We want to get you up to speed with the nitty gritty details of the
 environment required by CUDA. We've (hopefully) simplified this by
 including a Makefile that configures the environment for the pups cluster
