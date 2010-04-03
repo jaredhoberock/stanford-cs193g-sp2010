@@ -34,7 +34,7 @@ The _CUDA Runtime_ is happy to field questions about abnormal program execution,
 cudaError_t cudaGetLastError(void);
 }}}
 
-To make things slightly more complicated, we need to be sure to check for the error only after we're sure a kernel has finished executing. Because kernel launches are _asynchronous_, the host thread doesn't wait on the device to finish its work before continuing on with its own business, which might include launching more kernels, copying memory, enjoying a Mai Tai, etc. So in order to correctly check for an error, the host needs to _block_, or _synchronize_ with the device.  We can do this with the `cudaThreadSynchronize` function.
+To make things slightly more complicated, we need to be sure to check for the error only after we're sure a kernel has finished executing. Because kernel launches are _asynchronous_, the host thread doesn't wait on the device to finish its work before continuing on with its own business, which might include launching more kernels, copying memory, enjoying a Mai Tai, etc. So in order to correctly check for an error, the host needs to _block_ so it can _synchronize_ with the device.  We can do this with the `cudaThreadSynchronize` function.
 
 To see how all the pieces fit together, let's check for errors in our last example:
 
