@@ -43,5 +43,5 @@ run1: part1
 run2: part2
 	./part2
 
-run3: part3 the
+run3: part3
 	./part3
