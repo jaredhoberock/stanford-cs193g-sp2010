@@ -142,14 +142,18 @@ int main(void)
   
   // check CUDA output versus reference output
   int error = 0;
+  int num_errors = 0;
   for(int i=0;i<num_elements;i++)
   {
     float n = h_graph_nodes_result[i];
     float c = h_graph_nodes_checker_A[i];
-    if(abs((n - c)/c) > epsilon) 
+    if((n - c)*(n - c) > epsilon) 
     {
-      // TODO enable this only if you have a small number of spurious errors to track down
-      //printf("%d:%.3f::",i, n-c);
+      num_errors++;
+      if (num_errors < 10)
+      {
+            printf("%d:%.3f::",i, n-c);
+      }
       error = 1;
     }
   }
