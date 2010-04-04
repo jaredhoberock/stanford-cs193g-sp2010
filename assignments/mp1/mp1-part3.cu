@@ -7,6 +7,15 @@
 // We're going to run 20 iterations of the propage step.
 // Implement the corresponding code in CUDA.
 
+/* SUBMISSION GUIDELINES:
+ * You should copy your entire device_graph_iterate fuction and the 
+ * supporting kernal into a file called mp1-part3-solution.cu and submit
+ * that file. The fuction needs to have the exact same interface as the 
+ * device_graph_iterate function we provided. The kernel is internal 
+ * to your code and can look any way you want.
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
