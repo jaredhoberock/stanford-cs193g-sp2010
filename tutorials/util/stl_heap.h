@@ -54,7 +54,9 @@ inline void
 __push_heap_aux(_RandomAccessIterator __first,
                 _RandomAccessIterator __last, _Compare __comp) 
 {
-  __push_heap(__first, (__last - __first) - 1, 0, *(__last - 1), __comp);
+  int hole_index = (__last - __first) - 1;
+  int top_index = 0;
+  __push_heap(__first, hole_index, top_index, *(__last - 1), __comp);
 }
 
 template <class _RandomAccessIterator, class _Compare>
@@ -144,7 +146,11 @@ __pop_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
            _RandomAccessIterator __result, _Tp __x, _Compare __comp)
 {
   *__result = *__first;
-  __adjust_heap(__first, 0, __last - __first, __x, __comp);
+
+  int hole_index = 0;
+  int len = __last - __first;
+
+  __adjust_heap(__first, hole_index, len, __x, __comp);
 }
 
 template <class _RandomAccessIterator, class _Compare>
