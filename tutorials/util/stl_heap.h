@@ -34,18 +34,18 @@
 
 template <class _RandomAccessIterator, class _Distance, class _Tp, 
           class _Compare>
-void
- __device__
+__device__
+inline void
 __push_heap(_RandomAccessIterator __first, _Distance __holeIndex,
-            _Distance __topIndex, _Tp __value, _Compare __comp)
+            _Distance __topIndex, _Tp __x, _Compare __comp)
 {
   _Distance __parent = (__holeIndex - 1) / 2;
-  while (__holeIndex > __topIndex && __comp(*(__first + __parent), __value)) {
+  while (__holeIndex > __topIndex && __comp(*(__first + __parent), __x)) {
     *(__first + __holeIndex) = *(__first + __parent);
     __holeIndex = __parent;
     __parent = (__holeIndex - 1) / 2;
   }
-  *(__first + __holeIndex) = __value;
+  *(__first + __holeIndex) = __x;
 }
 
 template <class _RandomAccessIterator, class _Compare>
@@ -70,7 +70,7 @@ template <class _RandomAccessIterator, class _Distance, class _Tp>
  __device__
 void 
 __adjust_heap(_RandomAccessIterator __first, _Distance __holeIndex,
-              _Distance __len, _Tp __value)
+              _Distance __len, _Tp __x)
 {
   _Distance __topIndex = __holeIndex;
   _Distance __secondChild = 2 * __holeIndex + 2;
@@ -85,17 +85,17 @@ __adjust_heap(_RandomAccessIterator __first, _Distance __holeIndex,
     *(__first + __holeIndex) = *(__first + (__secondChild - 1));
     __holeIndex = __secondChild - 1;
   }
-  __push_heap(__first, __holeIndex, __topIndex, __value);
+  __push_heap(__first, __holeIndex, __topIndex, __x);
 }
 
 template <class _RandomAccessIterator, class _Tp>
  __device__
 inline void 
 __pop_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
-           _RandomAccessIterator __result, _Tp __value)
+           _RandomAccessIterator __result, _Tp __x)
 {
   *__result = *__first;
-  __adjust_heap(__first, 0, __last - __first, __value);
+  __adjust_heap(__first, 0, __last - __first, __x);
 }
 
 template <class _RandomAccessIterator>
@@ -119,7 +119,7 @@ template <class _RandomAccessIterator, class _Distance,
  __device__
 void
 __adjust_heap(_RandomAccessIterator __first, _Distance __holeIndex,
-              _Distance __len, _Tp __value, _Compare __comp)
+              _Distance __len, _Tp __x, _Compare __comp)
 {
   _Distance __topIndex = __holeIndex;
   _Distance __secondChild = 2 * __holeIndex + 2;
@@ -134,17 +134,17 @@ __adjust_heap(_RandomAccessIterator __first, _Distance __holeIndex,
     *(__first + __holeIndex) = *(__first + (__secondChild - 1));
     __holeIndex = __secondChild - 1;
   }
-  __push_heap(__first, __holeIndex, __topIndex, __value, __comp);
+  __push_heap(__first, __holeIndex, __topIndex, __x, __comp);
 }
 
 template <class _RandomAccessIterator, class _Tp, class _Compare>
  __device__
 inline void 
 __pop_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
-           _RandomAccessIterator __result, _Tp __value, _Compare __comp)
+           _RandomAccessIterator __result, _Tp __x, _Compare __comp)
 {
   *__result = *__first;
-  __adjust_heap(__first, 0, __last - __first, __value, __comp);
+  __adjust_heap(__first, 0, __last - __first, __x, __comp);
 }
 
 template <class _RandomAccessIterator, class _Compare>
