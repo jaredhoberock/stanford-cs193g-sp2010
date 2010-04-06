@@ -65,7 +65,7 @@ int main(void)
     host_array_a[i] = (float)i;
 
     // make array b random
-    host_array_b[i] = (float)rand();
+    host_array_b[i] = (float)rand() / RAND_MAX;
   }
 
   // copy arrays a & b to the device memory space
