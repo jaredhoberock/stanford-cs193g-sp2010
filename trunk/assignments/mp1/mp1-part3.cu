@@ -26,8 +26,10 @@
 
 event_pair timer;
 
-const float epsilon = 0.0000001f;
- 
+// amount of floating point numbers between answer and computed value 
+// for the answer to be taken correctly. 2's complement magick.
+const int maxUlps = 1000;
+  
 void host_graph_propagate(unsigned int *graph_indices, unsigned int *graph_edges, float *graph_nodes_in, float *graph_nodes_out, float * inv_edges_per_node, int array_length)
 {
   for(int i=0; i < array_length; i++)
@@ -156,7 +158,7 @@ int main(void)
   {
     float n = h_graph_nodes_result[i];
     float c = h_graph_nodes_checker_A[i];
-    if((n - c)*(n - c) > epsilon) 
+    if(!AlmostEqual2sComplement(n,c,maxUlps)) 
     {
       num_errors++;
       if (num_errors < 10)
