@@ -15,8 +15,11 @@
 #include <stdio.h>
 
 #include "mp1-util.h"
-
 #define EPSILON 0.00001f
+
+// amount of floating point numbers between answer and computed value 
+// for the answer to be taken correctly. 2's complement magick.
+const int maxUlps = 1000;
 
 event_pair timer;
   
@@ -134,10 +137,10 @@ int main(void)
     float4 v = h_force_vectors[i];
     float4 vc = h_force_vectors_checker[i];
 
-    if( abs((v.x - vc.x)/vc.x) > EPSILON ||
-    	abs((v.y - vc.y)/vc.y) > EPSILON ||
-    	abs((v.z - vc.z)/vc.z) > EPSILON ||
-    	abs((v.w - vc.w)/vc.w) > EPSILON) 
+    if( !AlmostEqual2sComplement(v.x,vc.x,maxUlps) ||
+    	!AlmostEqual2sComplement(v.y,vc.y,maxUlps) ||
+    	!AlmostEqual2sComplement(v.z,vc.z,maxUlps) ||
+    	!AlmostEqual2sComplement(v.w,vc.w,maxUlps)) 
     { 
       error = 1;
     }
