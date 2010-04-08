@@ -20,8 +20,10 @@
  * SUBMISSION INSTRUCTIONS
  * =========================
  * 
- * You can submit the assignment from any of the cluster machines by using
- * our submit script. Th submit script bundles the entire current directory into
+ * You can submit your entire working directory for this assignment 
+ * from any of the cluster machines by using our submit script. We want to be able
+ * to just run "make" to compile your code.
+ * The submit script bundles the entire current directory into
  * a submission. Thus, you use it by CDing to a the directory for your assignment,
  * and running:
  * 
@@ -46,10 +48,10 @@ const bool print_debug = false;
 
 event_pair timer;
 
-// the particle coordinates are already normalized (in the domain [0,1[ )
+// the particle coordinates are already normalized (in the domain [0,1] )
 // gridding provides the base 2 log of how finely the domain is subdivided
 // in each direction. So gridding.x == 6 means that the x-axis is subdivided
-// into 64 parts.
+// into 64 parts. (i.e. 2^(gridding.x) = number of bins on x axis)
 // Overall there cannot be more than 4B bins, so we can just concatenate the bin
 // indices into a single uint.
 
@@ -144,6 +146,14 @@ __global__ void initialize(T *array,T value, unsigned int array_length)
 void device_binning(float3 * h_particles, int * h_bins, int * h_bin_counters, int3 gridding, int num_particles, int num_bins, int bin_size)
 {
   // TODO: your implementation here
+
+	// How do I call a templated kernel? It's actually easy...
+	// int* array;
+	// int value = 0;
+	// int array_length = 0;
+	// initialize<<<griddim,blockdim>>>(array, value, array_length);
+	// The compiler will figure out the types of your arguments and codegen a implementation for each type you use.
+
 }
 
 int main(void)
