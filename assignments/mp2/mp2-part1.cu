@@ -1,21 +1,35 @@
-// ###############################################
-// ##### PRELIMINARY CODE, SUBJECT TO CHANGE #####
-// #####     BEFORE OFFICIAL ASSIGNMENT      #####
-// ###############################################
+/* This is machine problem 2, binning
+ * The problem is that you have particles in a 3D domain
+ * which is quantized into blocks or bins. You want to figure
+ * out which block each particle belongs to.
+ * Use the atomic functions that you learned about in lecture 3
+ * to implement the same functionality as the reference version on the cpu.
+ *
+ * FOR EXTRA CREDIT: 
+ * Write a version of your binning kernel that uses atomics hierarchically, 
+ * accumulating updates first into shared memory and then merging the results 
+ * from shared memory into the global memory. 
+ * As a hint, think about binning particles first into a coarse grid in a first kernel,
+ * and then binning the particles from each coarse bin into the 
+ * final bins in a second kernel.
+ */
 
-// This is machine problem 2, binning
-// The problem is that you have particles in a 3D domain
-// which is quantized into blocks or bins. You want to figure
-// out which block each particle belongs to.
-// Use the atomic functions that you learned about in lecture 3
-// to implement the same functionality as the reference version on the cpu
 
-/* SUBMISSION GUIDELINES:
- * You should copy your entire device_binning function and the 
- * supporting kernel into a file called mp2-part1-solution.cu and submit
- * that file. The function needs to have the exact same interface as the 
- * device_binning function we provided. The kernel is internal 
- * to your code and can look any way you want.
+
+/*
+ * SUBMISSION INSTRUCTIONS
+ * =========================
+ * 
+ * You can submit the assignment from any of the cluster machines by using
+ * our submit script. Th submit script bundles the entire current directory into
+ * a submission. Thus, you use it by CDing to a the directory for your assignment,
+ * and running:
+ * 
+ *   > cd *some directory*
+ *   > /usr/class/cs193g/bin/submit mp2
+ * 
+ * This will submit the current directory as your assignment. You can submit
+ * as many times as you want, and we will use your last submission.
  */
 
 #include <stdlib.h>

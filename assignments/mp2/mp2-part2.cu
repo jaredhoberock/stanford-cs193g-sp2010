@@ -1,10 +1,29 @@
-// ###############################################
-// ##### PRELIMINARY CODE, SUBJECT TO CHANGE #####
-// #####     BEFORE OFFICIAL ASSIGNMENT      #####
-// ###############################################
-
-// This is machine problem 2, part 2: k nearest neighbors
-// 
+/* This is machine problem 2, part 2: brute force k nearest neighbors
+ * You are given a large number of particles, and are asked
+ * to find the k particles that are nearest to each one.
+ * Look at the example in /tutorials/thread_local_variables.cu
+ * for how you can use per thread arrays for sorting.
+ * Using that example, port the cpu reference code to the gpu in a first step.
+ * In a second step, modify your code so that the per-thread arrays are in 
+ * shared memory. You should submit this second version of your code. 
+ */
+ 
+/*
+ * SUBMISSION INSTRUCTIONS
+ * =========================
+ * 
+ * You can submit the assignment from any of the cluster machines by using
+ * our submit script. Th submit script bundles the entire current directory into
+ * a submission. Thus, you use it by CDing to a the directory for your assignment,
+ * and running:
+ * 
+ *   > cd *some directory*
+ *   > /usr/class/cs193g/bin/submit mp2
+ * 
+ * This will submit the current directory as your assignment. You can submit
+ * as many times as you want, and we will use your last submission.
+ */
+ 
 #include <cassert>
 
 #include "mp2-util.h"

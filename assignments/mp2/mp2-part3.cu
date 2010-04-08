@@ -1,10 +1,38 @@
-// ###############################################
-// ##### PRELIMINARY CODE, SUBJECT TO CHANGE #####
-// #####     BEFORE OFFICIAL ASSIGNMENT      #####
-// ###############################################
+/* This is machine problem 2, part 3, k nearest neighbor with binning
+ *
+ * In part 3 we'll combine the things you did in parts 1 and 2.
+ * The basic problem is the same as in part 2 (find the k nearest
+ * neighbors of each particle), but you're going to use a algorithmically
+ * smarter approach. Instead of comparing each particle against every 
+ * other particle, you will first bin the particles into bins of a given
+ * size, and then only compare each particle against the particles 
+ * which are in its own bin and all the 26 neighboring bins.
+ * Use what you learned in part 1 for the binning step, and what
+ * you learned in part 2 for finding the k nearest neighbors.
+ * Your code should run with both small bins (8-16 particles/bin) and 
+ * large bins (more than 512 particles per bin) so you shouldn't have
+ * any dependency between your threadblock size and the bin size. 
+ * We'll be testing the speed of your code with different bin sizes (from 16 to 1024), 
+ * so you should make sure your code runs efficiently at all sizes.
+ *
+ */
+ 
+/*
+ * SUBMISSION INSTRUCTIONS
+ * =========================
+ * 
+ * You can submit the assignment from any of the cluster machines by using
+ * our submit script. Th submit script bundles the entire current directory into
+ * a submission. Thus, you use it by CDing to a the directory for your assignment,
+ * and running:
+ * 
+ *   > cd *some directory*
+ *   > /usr/class/cs193g/bin/submit mp2
+ * 
+ * This will submit the current directory as your assignment. You can submit
+ * as many times as you want, and we will use your last submission.
+ */
 
-// This is machine problem 2, n-body with binning and cutoff
-//
 #include "mp2.h"
 #include "mp2-util.h"
 
