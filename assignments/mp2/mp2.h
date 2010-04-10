@@ -7,10 +7,7 @@
 
 #include <cuda.h>
 
-#define MIN_RADIUS 0.0001f
-#define EPSILON 0.001f
-
-// pointers to host & device arrays
+// pointers to host arrays
 extern float3 *h_particles;
 extern int *h_bins;
 extern int *h_knn;

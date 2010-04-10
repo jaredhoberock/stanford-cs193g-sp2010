@@ -83,28 +83,20 @@ void init_list(T *base_ptr, unsigned int size, T val)
 __host__ __device__
 void insert_list(float *dist_list, int *id_list, int size, float dist, int id)
 {
-  int k = 0;
-  for(;k<size-1;k++)
-  {
-    if(dist > dist_list[k])
-    {
-      if(k > 0)
-      {
-        dist_list[k] = dist_list[k+1];
-        id_list[k] = id_list[k+1];
-      }
-    }
-    else {
-      break;
-    }
-  }
-  if(k > -1)
-  {
-    dist_list[k] = dist;
-    id_list[k] = id;
-  }
+ int k;
+ for (k=0; k < size; k++) {
+   if (dist < dist_list[k]) {
+     // we should insert it in here, so push back and make it happen
+     for (int j = size - 1; j > k ; j--) {
+       dist_list[j] = dist_list[j-1];
+       id_list[j] = id_list[j-1];
+     }
+     dist_list[k] = dist;
+     id_list[k] = id;
+     break;
+   }
+ }
 }
-
 
 void allocate_host_memory(int num_particles, int num_bins, int bin_size, int num_neighbors,
                           float3 *&h_particles, int *&h_bins, int *&h_knn, int *&h_bin_counters,
@@ -136,7 +128,7 @@ void allocate_host_memory(int num_particles, int num_bins, int bin_size, int num
 
 void allocate_device_memory(int num_particles, int num_bins, int bin_size, int num_neighbors,
                             float3 *&d_particles, int *&d_bins,
-                            int *&d_knn, float3 *&d_binned_particles, int *&d_bin_counters, int *&d_overflow_flag)
+                            int *&d_knn, int *&d_bin_counters, int *&d_overflow_flag)
 {
   // TODO: your device memory allocations here
   // TODO: don't forget to check for errors
@@ -161,7 +153,7 @@ void deallocate_host_memory(float3 *h_particles, int *h_bins, int *h_knn, int *h
 
 
 void deallocate_device_memory(float3 *d_particles, int *d_bins,
-                              int *d_knn, float3 *d_binned_particles, int *d_bin_counters, int *d_overflow_flag)
+                              int *d_knn, int *d_bin_counters, int *d_overflow_flag)
 {
   // TODO: your device memory deallocations here
   // TODO: don't forget to check for errors
@@ -218,6 +210,10 @@ void host_knn_particle(float3 *particles, int *bins, int *part_knn, int id, int 
       }
     }
   }
+  for(int j=0;j<num_neighbors;j++)
+  { 
+    part_knn[j] = neigh_ids[j];
+  }
 }
 
 template
@@ -250,7 +246,7 @@ void host_binned_knn(float3 *particles, int *bins, int *knn, int3 binning_dim, i
 
 int main(void)
 {  
-  // create arrays of 1M elements
+  // create arrays of 512K elements
   int num_particles = 512*1024;
   int log_bpd = 4;
   int bins_per_dim = 1 << log_bpd;
@@ -281,13 +277,12 @@ int main(void)
   float3 *d_particles = 0;
   int *d_bins = 0;
   int *d_knn = 0;
-  float3 *d_binned_particles = 0;
   int *d_bin_counters = 0;
   int *d_overflow_flag = 0;
 
   allocate_device_memory(num_particles, num_bins, bin_size, num_neighbors,
                          d_particles, d_bins,
-                         d_knn, d_binned_particles, d_bin_counters, d_overflow_flag);
+                         d_knn, d_bin_counters, d_overflow_flag);
 
   // generate random input
   // initialize
@@ -304,6 +299,10 @@ int main(void)
   for(int i=0;i<num_bins*bin_size;i++)
   {
     h_bins[i] = h_bins_checker[i] = h_particles_binids_checker[i] = -1;
+  }
+  for(int i=0;i<num_particles*num_neighbors;i++)
+  {
+    h_knn[i] = h_knn_checker[i] = -1;
   }
   
   // copy input to GPU
@@ -352,7 +351,7 @@ int main(void)
                          h_bins_checker, h_knn_checker, h_particles_binids_checker, h_bin_counters_checker);
 
   deallocate_device_memory(d_particles, d_bins,
-                           d_knn, d_binned_particles, d_bin_counters, d_overflow_flag);
+                           d_knn, d_bin_counters, d_overflow_flag);
   
   return 0;
 }

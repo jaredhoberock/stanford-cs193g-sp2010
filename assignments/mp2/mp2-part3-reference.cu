@@ -43,7 +43,6 @@ bool cross_check_results(int num_particles, int num_bins, int bin_size, int num_
                          int *h_bins, int *h_knn, int *h_knn_checker)
 {
   int error = 0;
-  int pos_mismatches = 0;
   
   for(int i=0;i<num_bins;i++)
   {
@@ -73,14 +72,13 @@ bool cross_check_results(int num_particles, int num_bins, int bin_size, int num_
   }
   for(int i=0;i<num_particles;i++)
   {
-  for(int j=0;j<num_neighbors;j++)
-  {
-    if(h_knn[i*num_neighbors + j] != h_knn_checker[i*num_neighbors + j])
+    for(int j=0;j<num_neighbors;j++)
     {
-      pos_mismatches++;     
-      error = 1;
+      if(h_knn[i*num_neighbors + j] != h_knn_checker[i*num_neighbors + j])
+      {   
+        error = 1;
+      }
     }
-  }
   }
   
   if(error)
