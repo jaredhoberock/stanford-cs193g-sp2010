@@ -61,26 +61,19 @@ void init_list(T *base_ptr, unsigned int size, T val)
 __host__ __device__
 void insert_list(float *dist_list, int *id_list, int size, float dist, int id)
 {
-  int k = 0;
-  for(;k<size-1;k++)
-  {
-    if(dist > dist_list[k])
-    {
-      if(k > 0)
-      {
-        dist_list[k] = dist_list[k+1];
-        id_list[k] = id_list[k+1];
-      }
-    }
-    else {
-      break;
-    }
-  }
-  if(k > -1)
-  {
-    dist_list[k] = dist;
-    id_list[k] = id;
-  }
+ int k;
+ for (k=0; k < size; k++) {
+   if (dist < dist_list[k]) {
+     // we should insert it in here, so push back and make it happen
+     for (int j = size - 1; j > k ; j--) {
+       dist_list[j] = dist_list[j-1];
+       id_list[j] = id_list[j-1];
+     }
+     dist_list[k] = dist;
+     id_list[k] = id;
+     break;
+   }
+ }
 }
 
 template
