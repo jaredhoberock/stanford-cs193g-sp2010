@@ -111,7 +111,7 @@ bool cross_check_results(int * h_bins, int * h_bins_checker, int * h_bin_counter
     }
     for(int j=0; j<bin_size;j++)
     {
-      if(h_bins[i*bin_size+j] != -1)
+      if(h_bins_checker[i*bin_size+j] != -1)
       {
         if(h_particles_binids_checker[h_bins[i*bin_size+j]] != i)
         {
