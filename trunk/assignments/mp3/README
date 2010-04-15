@@ -1,0 +1,7 @@
+// TODO
+
+Directions for each of the 3 parts of MP3 are inlined into
+the top of mp3-part1.cu, mp3-part2.cu, and mp3-part3.cu.
+When compiled out of the box, each of these parts should
+report an error allocating device memory and exit
+immediately.
