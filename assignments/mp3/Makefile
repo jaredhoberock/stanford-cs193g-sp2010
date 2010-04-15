@@ -46,3 +46,13 @@ part3: mp3-part3.cu mp3-util.h black_scholes.h black_scholes.cu compact.h compac
 	
 clean:
 	rm -rf part1 part2 part3
+
+run1: part1
+	./part1
+
+run2: part2
+	./part2
+
+run3: part3
+	./part3
+
