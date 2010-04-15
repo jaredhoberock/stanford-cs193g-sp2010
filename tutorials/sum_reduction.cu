@@ -98,6 +98,10 @@ int main(void)
 
   std::cout << "Device sum: " << device_result << std::endl;
 
+  // deallocate device memory
+  cudaFree(d_input);
+  cudaFree(d_partial_sums_and_total);
+
   return 0;
 }
 
