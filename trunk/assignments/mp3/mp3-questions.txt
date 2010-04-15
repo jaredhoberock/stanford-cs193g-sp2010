@@ -1,0 +1,44 @@
+1. In Part 1, our naive scheduling of the subsequent rounds of Black-Scholes jobs
+incurs a performance penalty due to divergence. When only a handful of threads
+are active inside a warp, the entire warp of threads must participate in the
+computation whether they like it or not. On the other hand, when all the threads
+of a warp are inactive, the warp may quickly "early out" of the kernel.
+
+1a. Derive an expression for the probability that a given warp of threads will be
+completely inactive during the sparse rounds of Part 1. You may assume that the
+distribution of active options across the option set is uniform.
+
+1b. Compare the number of options of Part 1's sparse rounds to the total number of
+threads launched in those rounds. What is the expected number of inactive warps for
+these launches?
+
+
+2. In Part 2, our implementation of stream compaction relied on a composition of
+two parallel patterns, prefix sum (scan) and scatter. While this modularity matches our
+mental model of the algorithm, physically partitioning the computation into separate
+kernels may incur overhead due to kernel launch and redundant global memory bandwidth.
+
+2a. Explain which discrete kernels involved in the compaction process may be fused. 
+
+2b. Explain why prefix sum is less useful in serial codes.
+
+
+3. In Part 3, we reorganized the sparse rounds of Black-Scholes by compacting all
+active work such that we would spawn no inactive warps. Reordering data in this way
+comes with a substantial memory bandwidth cost.
+
+3a. Time the individual components of stream compaction. Which is the bottleneck for
+your implementation? Is there more than one?
+
+3b. How many sparse rounds of Black-Scholes are necessary for your compacted
+schedule of Part 3 to break even with Part 1?
+
+4. Extra Credit
+
+4a. For extra credit, implement the fusion opportunities you identified in 2a.
+
+4b. Our implementation of Black-Scholes uses an approximation to the cumulative normal
+distribution function. Higher precision algorithms are available. Implement one (or
+more) and study what effect the cost of this function has on the benefit of stream
+compaction.
+
