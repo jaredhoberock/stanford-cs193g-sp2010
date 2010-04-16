@@ -2,7 +2,7 @@
 
 = Machine Problem Three =
 
-In MP3, we'll explore compute divergence as a performance hazard in the context of the [http://en.wikipedia.org/wiki/Black-scholes Black-Scholes] algorithm, a well-known computationally-bound kernel.  We'll build a simple divergence-avoiding schedule based on stream compaction, itself implemented with the parallel patterns, scan and scatter.
+In MP3, we'll explore compute divergence as a performance hazard in the context of the [http://en.wikipedia.org/wiki/Black-scholes Black-Scholes] algorithm, a well-known computationally-bound kernel.  We'll build a simple divergence-avoiding schedule based on stream compaction, itself implemented with the parallel patterns scan and scatter.
 
 The third MP consists of three parts. You can get all the files you'll need by doing an svn checkout from our source tree as follows:
 
