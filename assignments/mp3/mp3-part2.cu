@@ -146,6 +146,7 @@ int main(void)
       if(h_compacted_result[i] != h_validate_me[i])
       {
         std::cerr << "h_compacted_result[" << i << "]: " << h_compacted_result[i] << " d_compacted_result[" << i << "]: " << h_validate_me[i] << std::endl;
+        ++num_errors;
       }
 
       if(num_errors == 10) break;
