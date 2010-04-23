@@ -1,0 +1,49 @@
+Welcome to the second Machine Problem!
+
+DUE DATE: Tu May 4, 11:59pm
+
+MP4 is a two-part assignment. Detailed instructions for each of the two
+parts of MP4 are included in commentary at the top of the files mp4-part1.cu
+and mp4-part2.cu. When compiled out of the box, each of these parts should
+report an error and exit immediately. Your task is to correctly implement
+sections marked TODO: in each part, causing the main() functions of each to
+return normally.
+
+
+SUBMISSION INSTRUCTIONS
+=========================
+
+You can submit an assignment from any of the cluster machines by using
+our submit script. Th submit script bundles the entire current directory into
+a submission. Thus, you use it by CDing to a the directory for your assignment,
+and running:
+
+  > cd *some directory*
+  > /usr/class/cs193g/bin/submit mp4
+
+This will submit the current directory as your assignment. You can submit
+as many times as you want, and we will use your last submission.
+
+
+1) RUNNING ON PUPS USING OUR MAKEFILE:
+======================================
+
+To compile the three problems (part1 and part2), run:
+   > make all
+
+To run any of the problems, you can also use the makefile, like so:
+   > make run1
+   > make run2
+
+
+2) RUNNING ON YOUR OWN MACHINE USING OUR MAKEFILE:
+==================================================
+
+part2 of MP4 requires GPU support for double precision (64b) floating point
+arithmetic. The GPUs in the pups cluster support double precision, but your development
+machine may not. This is fine -- you can develop in single precision, but you should
+verify that your code compiles and runs in double precision on the pups cluster machines.
+
+In order to develop in single precision, you should modify the Makefile by following the
+instructions therein.
+
