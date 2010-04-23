@@ -11,7 +11,7 @@
 || Tu April 13 || Lecture 5 - Performance Considerations || Slides [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_5/performance_considerations.ppt ppt] [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_5/performance_considerations.pdf pdf]|| Kirk & Hwu, Chapter 6 ||
 || Th April 15 || Lecture 6 - Parallel Patterns I || Slides [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_6/parallel_patterns_1.ppt ppt] [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_6/parallel_patterns_1.pdf pdf] || Kirk & Hwu, Chapter 10 <br> MP2 Due <br> MP3 Assigned ||
 || Tu April 20 || Project Proposals || Slides XXX || ||
-|| Th April 22 || Lecture 7 - Parallel Patterns II || Slides [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_7/parallel_patterns_2.ppt ppt] || Kirk & Hwu, Chapter 10 <br> MP3 Due ||
+|| Th April 22 || Lecture 7 - Parallel Patterns II || Slides [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_7/parallel_patterns_2.ppt ppt] [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_7/parallel_patterns_2.pdf pdf] || Kirk & Hwu, Chapter 10 <br> MP3 Due ||
 || Tu April 27 || Lecture 8 - Introduction to Thrust || Slides XXX || MP4 Assigned||
 || Th April 29 || Lecture 9 - Sparse Matrix Vector Operations || Slides XXX || ||
 || Tu May 4    || Lecture 10 - PDE Solvers || Slides XXX || MP4 Due ||
