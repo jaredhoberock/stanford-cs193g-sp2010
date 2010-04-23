@@ -1,1 +1,19 @@
-To come.
+The speedup of Part 1's GPU implementation is less impressive than in the previous MP.
+
+a. On the other hand, the GPU implementation of Part 1's solution solves a different problem than
+the CPU. Explain.
+
+b. Implement Thrust's GPU solution on the CPU (i.e., replace device_vectors with host_vectors) and
+compare the performance of the GPU solution to your new CPU solution.  What is the speedup?
+
+Unlike our implementation from MP3, Part 2's black_scholes_functor takes its arguments as a struct
+rather than as three separate parameters. It also returns its two results wrapped in a single struct
+rather than by modifying two parameters passed as reference. Additionally, the memory storing this
+data is organized as an array of structures rather than MP3's strategy of a structure of arrays.
+
+a. Assume that Thrust implements the Black-Scholes algorithm by mapping the black_scholes_functor to a
+contiguous group of threads by passing them a contiguous group of option structures. In general, what
+effect, if any, does this memory access pattern have on performance?
+
+b. Does this effect matter for the Black-Scholes algorithm? Explain.
+
