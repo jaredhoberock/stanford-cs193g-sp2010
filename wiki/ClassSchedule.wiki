@@ -13,7 +13,7 @@
 || Tu April 20 || Project Proposals || || ||
 || Th April 22 || Lecture 7 - Parallel Patterns II || Slides [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_7/parallel_patterns_2.ppt ppt] [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_7/parallel_patterns_2.pdf pdf] || Kirk & Hwu, Chapter 10 <br> MP3 Due ||
 || Tu April 27 || Lecture 8 - Introduction to Thrust || Slides [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_8/introduction_to_thrust.ppt ppt] [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_8/introduction_to_thrust.pdf pdf] || [MpFour MP4] Assigned||
-|| Th April 29 || Lecture 9 - Sparse Matrix Vector Operations || Slides XXX || ||
+|| Th April 29 || Lecture 9 - Sparse Matrix Vector Operations || Slides [http://stanford-cs193g-sp2010.googlecode.com/svn/trunk/lectures/lecture_9/sparse_matrix_vector_multiplication_on_throughput_oriented_processors.ppt ppt] || ||
 || Tu May 4    || Lecture 10 - PDE Solvers || Slides XXX || MP4 Due ||
 || Th May 6    || Lecture 11 - The Fermi Architecture || Slides XXX || ||
 || Tu May 11   || Lecture 12 - Ray Tracing Case Study || Slides XXX || ||
