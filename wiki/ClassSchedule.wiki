@@ -21,5 +21,4 @@
 || Tu May 18   || Lecture 14 - Artificial Intelligence Case Study || Slides XXX || ||
 || Th May 20   || Lecture 15 - Advanced Optimization || Slides XXX || Kirk & Hwu, Chapter 12 ||
 || Tu May 25   || Lecture 16 - TBD || Slides XXX || ||
-|| Th May 27   || Project Presentations 1 || || ||
-|| Tu June 1   || Project Presentations 2 || || ||
+|| Th May 27   || Project Presentations || || ||
