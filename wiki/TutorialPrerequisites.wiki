@@ -45,25 +45,3 @@ CUDA error: no error
 }}}
 
 If the program succeeds without error, then let's [TutorialAHeterogeneousProgrammingModel start coding]!
-
-
-=Using the Pups Cluster=
-Machines 1-10 and 12 of the pups cluster has CUDA-enabled GPUs in them. You can use these machines locally or remotely. To remotely access a machine, ssh into the specific machine you want:
-{{{
-ssh pup1.stanford.edu
-}}}
-Your username and password is your sunet id. You will encounter errors if you try to compile without setting up your environment correctly. To do so, you need to add nvcc to your path, and have your linker library path set to point to the cuda library path.
-
-If you're using c-shell (the default), please add the following to the .cshrc file in your home directory:
-
-{{{
-setenv PATH ${PATH}:/usr/local/cuda/bin
-setenv LD_LIBRARY_PATH /usr/local/cuda/lib64
-}}}
-
-If you're using bash, please add the following to your .bashrc file in your home directory:
-
-{{{
-export PATH=$PATH:/usr/local/cuda/bin
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64
-}}}
