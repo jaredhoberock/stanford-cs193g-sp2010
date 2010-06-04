@@ -77,13 +77,13 @@ int main(void)
   size_t grid_size = num_elements / block_size;
 
   // deal with a possible partial final block
-  if(grid_size % block_size) ++grid_size;
+  if(num_elements % block_size) ++grid_size;
 
   // launch the kernel
   vector_add<<<grid_size, block_size>>>(device_array_a, device_array_b, device_array_c, num_elements);
 
   // copy the result back to the host memory space
-  cudaMemcpy(host_array_c, device_array_c, num_elements, cudaMemcpyDeviceToHost);
+  cudaMemcpy(host_array_c, device_array_c, num_bytes, cudaMemcpyDeviceToHost);
 
   // print out the first 10 results
   for(int i = 0; i < 10; ++i)
