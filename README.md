@@ -1,0 +1,12 @@
+# Course Objectives
+
+Virtually all semiconductor market domains, including PCs, game consoles, mobile handsets, servers, supercomputers, and networks, are converging to concurrent platforms. There are two important reasons for this trend. First, these concurrent processors can potentially offer more effective use of chip space and power than traditional monolithic microprocessors for many demanding applications. Second, an increasing number of applications that traditionally used Application Specific Integrated Circuits (ASICs) are now implemented with concurrent processors in order to improve functionality and reduce engineering cost. The real challenge is to develop applications software that effectively uses these concurrent processors to achieve efficiency and performance goals.
+
+The aim of this course is to provide students with knowledge and hands-on experience in developing applications software for processors with massively parallel computing resources. In general, we refer to a processor as massively parallel if it has the ability to complete more than 64 arithmetic operations per clock cycle. Many commercial offerings from NVIDIA, AMD, and Intel already offer such levels of concurrency. Effectively programming these processors will require in-depth knowledge about parallel programming principles, as well as the parallelism models, communication models, and resource limitations of these processors. The target audiences of the course are students who want to develop exciting applications for these processors, as well as those who want to develop programming tools and future implementations for these processors.
+
+We will be using NVIDIA processors and the CUDA programming tools in the lab section of the course. Many have reported success in performing non-graphics parallel computation as well as traditional graphics rendering computation on these processors. You will go through structured programming assignments before being turned loose on the final project. Each programming assignment will involve successively more sophisticated programming skills. The final project will be of your own design, with the requirement that the project must involve a demanding application such as mathematics- or physics-intensive simulation or other data-intensive computation, followed by some form of visualization and display of results.
+
+# Acknowledgements
+
+This course is based on Wen-mei Hwu & David Kirk's UIUC Applied Parallel Programming class. We appreciate their generosity in providing their course materials to others.
+
