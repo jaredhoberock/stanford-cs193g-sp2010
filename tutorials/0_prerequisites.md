@@ -44,5 +44,5 @@ $ ./test
 CUDA error: no error
 ```
 
-If the program succeeds without error, then let's start coding!
+If the program succeeds without error, then [let's start coding!](1_a_heterogeneous_programming_model.md)
 
