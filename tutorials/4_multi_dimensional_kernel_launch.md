@@ -174,7 +174,7 @@ $ ./two_dimensional_kernel_launch
 
 From this output, the 2D structure of both our thread blocks and grid is clear!
 
-Now that we've got kernel launch down, the next section introduces `__device__` functions.
+Now that we've got kernel launch down, [the next section](5_device_functions.md) introduces `__device__` functions.
 
 [^1]: While thread blocks can be 1-, 2-, or 3D, grids of thread blocks are limited to 1- or 2D.
 
