@@ -71,5 +71,5 @@ Similarly, attempts by the device to dereference a host pointer will also meet
 with disaster. The full source code of this example, with additional
 commentary, is [available in this site's code repository](cuda_memory_model.cu).
 
-Now that we know the difference between host and device space memory, let's write our first kernel!
+Now that we know the difference between host and device space memory, [let's write our first kernel!](2_hello_world.md)
 
