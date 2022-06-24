@@ -49,7 +49,7 @@ int main(void)
 ```
 
 This program requires the non-standard files `cuPrintf.cu` and `cuPrintf.cuh`,
-which are [available in this site's code repository](/util).
+which are [available in this site's code repository](util).
 
 Let's compile this program by copying it to a file called `hello_world.cu`.
 Additionally, place the files `cuPrintf.cu` and `cuPrintf.cuh` in a directory
