@@ -14,7 +14,7 @@ with host memory using functions which should be familiar to C programmers.
 Similarly, the host uses analogous system calls, such as `cudaMalloc` and
 `cudaFree` to manage device space memory.
 
-```
+```c++
 #include <stdlib.h>
 #include <stdio.h>
 
