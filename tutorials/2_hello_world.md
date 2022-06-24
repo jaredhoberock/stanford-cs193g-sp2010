@@ -109,5 +109,5 @@ Hello, world from the device!
 
 As always, you can view the [full source code of this example](hello_world.cu)
 along with additional commentary in our code repository. We'll learn more
-about `__global__` functions in the next section.
+about `__global__` functions in [the next section](3_global_functions.md).
 
