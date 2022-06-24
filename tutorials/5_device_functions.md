@@ -45,6 +45,7 @@ __device__ int my_illegal_recursive_device_function(int x)
   if(x == 0) return 1;
   return x * my_illegal_recursive_device_function(x-1);
 }
+```
 
 This code produces the following compiler error:
 
