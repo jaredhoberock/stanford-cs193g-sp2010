@@ -143,5 +143,6 @@ as they are to `__global__` functions.
 [An expanded version of this example](device_functions.cu) is available in the
 site's code repository.
 
-In the next section, we'll learn how to detect CUDA errors, such as crashing kernels.
+In [the next section](6_when_something_goes_wrong.md), we'll learn how to
+detect CUDA errors, such as crashing kernels.
 
