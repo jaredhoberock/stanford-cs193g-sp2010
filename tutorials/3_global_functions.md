@@ -106,7 +106,7 @@ workload sizes which are not evenly divided by `blockDim.x`.
 Keen observers will note this example's final curiosity: the `.x` member of
 each of the built-in variables `threadIdx`, `blockIdx`, and `blockDim`. In
 fact, these variables are vector-typed, implying multi-dimensional kernel
-launch, which is the subject of the next section.
+launch, which is the subject of [the next section](4_multi_dimensional_kernel_launch.md).
 
 
 [^1]: In fact, this rationale doesn't tell the whole story. `__global__`
