@@ -19,7 +19,7 @@ Additionally, you'll also need a host compiler which works with `nvcc` to compil
 
 To make sure everything is set up correctly, let's compile and run a trivial CUDA program to ensure all the tools work together correctly.
 
-```
+```c++
 #include <stdio.h>
 
 __global__ void foo()
