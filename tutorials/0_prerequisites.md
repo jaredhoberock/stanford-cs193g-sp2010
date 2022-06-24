@@ -40,7 +40,8 @@ To compile this program, copy it to a file called `test.cu` and compile it from 
 
 ```
 $ nvcc test.cu -o test
-$ ./test CUDA error: no error
+$ ./test
+CUDA error: no error
 ```
 
 If the program succeeds without error, then let's start coding!
