@@ -76,13 +76,13 @@ happens when change the kernel launch's configuration.
 
 Try changing the line
 
-```
+```c++
 device_greetings<<<1,1>>>();
 ```
 
 to
 
-```
+```c++
 device_greetings<<<10,64>>>();
 ```
 
